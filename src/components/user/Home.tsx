@@ -122,7 +122,7 @@ const RightSvg = styled(motion.svg)`
 
 const Item = styled(motion.div)<{ bgposter: string }>`
   background-color: white;
-  background-image:"https://www.discoverlosangeles.com/sites/default/files/images/2019-01/hotel-angeleno-west-views.jpg?width=1600&height=1200&fit=crop&quality=78&auto=webp";
+  background-image:"https://itimgstorage.blob.core.windows.net/source/img.jpg";
   background-size: cover;
   background-position: center center;
   height: 400px;
@@ -301,7 +301,7 @@ function Homelist() {
                 layoutId={restaurant.id + ""}
                 key={restaurant.id}
                 whileHover="hover"
-
+                // bgposter에 값을 넣거나, 이 속성을 제거해주세요.
                 bgposter="https://itimgstorage.blob.core.windows.net/source/img.jpg"
               >
                 <MovieInfo variants={infoVariants}>
