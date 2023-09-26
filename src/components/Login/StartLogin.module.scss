@@ -1,0 +1,62 @@
+@import "../../assets/reset.css";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr; // 두 개의 열을 생성. 1fr 1fr은 각 열이 콘테이너의 50% 폭을 가지게 됩니다.
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.left {
+  background-image: url('../../assets/img/startPage.png'); 
+  background-size: 100% auto; // 이미지가 가로 너비에 꽉 차게 설정
+  background-repeat: no-repeat; // 이미지가 반복되지 않도록 설정합니다.
+  background-color: #FEE89F; // 나머지 빈 공간의 배경 색
+  background-position: center center; // 이미지 중앙
+}
+
+.right {
+  // 오른쪽 열에 적용할 스타일을 작성
+  display: flex;
+  flex-direction: column;
+  justify-content:  center;// 컨텐츠를 열의 하단에 위치시킵니다.
+  align-items: center; // 컨텐츠를 열의 오른쪽에 위치시킵니다.
+  height: 100vh; // 또는 100vh를 사용하여 화면의 전체 높이를 차지하도록 설정할 수 있습니다.
+}
+.logoimg{
+  width: 3vw;
+  height: 7vh;
+  margin-bottom: 3vh;
+}
+.title{
+  font-size: 20px;
+  margin-bottom: 5vh;
+}
+
+.righttitle{
+  font-size: 30px;
+  margin-bottom: 2vh;
+}
+.eattitle{
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 3vh;
+}
+
+.kakaologinbtn {
+  background-color: #ffeb3b;
+  color: #000000;
+  width: 25vw;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 2vh;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: #fee500;
+  }
+}
