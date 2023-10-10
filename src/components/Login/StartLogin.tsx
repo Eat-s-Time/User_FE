@@ -15,6 +15,8 @@ function StartLogin() {
   const params = new URL(document.location.toString()).searchParams;
   const code = params.get("code");
 
+  //로그인을 작성하는 코드
+
 
   const KakaoLogin = () => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
@@ -38,7 +40,7 @@ function StartLogin() {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
-        }
+        }     
       );
       setToken(res.data.access_token);
       postToken(res.data.access_token);

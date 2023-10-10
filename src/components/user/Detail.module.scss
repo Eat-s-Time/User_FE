@@ -1,0 +1,133 @@
+@import "../../assets/reset.css";
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap");
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: #000000;
+  height: 100vh;
+}
+
+.slidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-right: grey solid 1px;
+  color: white;
+  align-items: center; // Added this to center the bar items horizontally
+}
+.baritemLayout {
+  display: flex; /* Make this a flex container */
+  flex-direction: column; /* Lay children out vertically */
+  height: 100vh;
+  gap: 10px; /* Space between items */
+  z-index: 1;
+}
+.baritem {
+  color: white;
+  margin-top: 10vh;
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+.active {
+  font-weight: bold;
+  color: orange;
+  cursor: pointer;
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 상단에 위치 */
+
+  background-color: black;
+}
+.logo {
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 3px solid white;
+  border-radius: 50%;
+}
+.Bannerpic {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  height: 15vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 0)
+  ),
+    url("https://images.unsplash.com/photo-1611095772763-4b0b2b0b0b0b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmVhdXR5JTIwY2FyJTIwYmVhY2h8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80");
+}
+.logoBanner {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  background-color: black;
+  padding: 30px;
+  padding-top: 30px;
+  border-radius: 15px;
+  margin-top: -30px;
+}
+
+.menuname {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 10px;
+}
+.txt {
+  font-size: 20px;
+  color: white;
+  margin-bottom: 10px;
+}
+.bookbtn {
+  color: white;
+  background-color: orange;
+  width: 15vw;
+  height: 15vh;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 20px;
+  display: flex; // 추가된 속성
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: auto;
+}
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.infolayout {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px;
+  margin-top: 50px;
+  align-items: flex-start;
+}
+
+.info {
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
+
+.infoLogo {
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+}

@@ -1,0 +1,66 @@
+@import "../../assets/reset.css";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Noto Sans KR', sans-serif;
+  height: 100vh;
+  background-color: black;
+  color: white;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+    color: white;
+    font-weight: bold;
+    font-size: 130%;
+    margin-bottom: 15vh;
+  }
+
+  .person {
+    color: white;
+    font-weight: bold;
+    font-size: 110%;
+    margin-bottom: 10vh;
+    margin-bottom:  10vh;
+  }
+
+  .plusbtn {
+    display: flex;
+    width: 2vw;
+    height: 2vw;
+    border: 1.5px solid white;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 180%;
+  }
+
+  .personLayout {
+    display: flex;
+    flex-direction: row;
+    gap: 5vw;
+  }
+
+  .adultLayout {
+    display: flex;
+    flex-direction: row;
+    gap: 30vw;
+  }
+  .bookbtn {
+    color: white;
+    background-color: orange;
+    width: 50vw;
+    height: 10vh;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 20px;
+    display: flex; // 추가된 속성
+    align-items: center;
+    justify-content: center;
+    margin-top: 10vh;
+    cursor: pointer;
+  }

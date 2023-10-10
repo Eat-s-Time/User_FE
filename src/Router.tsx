@@ -1,8 +1,11 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import StartLogin from "./components/Login/StartLogin";
 import RestaurantJoin from "./components/restaurant/RestaurantJoin";
-import Header from "./components/Header";
 import Homelist from "./components/user/Home";
+import Companyset from "./components/Login/Companyset";
+import Detail from "./components/user/Detail";
+import Menu from "./components/user/Menu";
+import Waiting from "./components/user/waiting";
 
 function Router() {
   return (
@@ -11,7 +14,11 @@ function Router() {
         <Route exact path='/' component={StartLogin}/>
         <Route path='/restaurantJoin' component={RestaurantJoin}/>
         <Route path='/waitingUser' component={StartLogin}/>
+        <Route path='/user/company' component={Companyset}/>
         <Route path='/user/main' component={Homelist}/>
+        <Route path='/user/detail' component={Detail}/>
+        <Route path='/user/menu' component={Menu}/>
+        <Route path='/user/waiting' component={Waiting}/>
       </Switch>
     </BrowserRouter>
   );

@@ -2,8 +2,12 @@ import styles from "./RestaurantJoin.module.scss";
 
 function RestaurantJoin() {
   return (
+    <div className={styles.background}>
     <div className={styles.container}>
       <h1 className={styles.title}>잇츠타임 입점신청</h1>
+    
+      <label>사업자 등록번호</label>
+      <input type="text" />
 
       <label>사업자등록증</label>
       <input type="file" />
@@ -33,6 +37,7 @@ function RestaurantJoin() {
       <input type="text" />
 
       <button> 입점 신청하기</button>
+    </div>
     </div>
   );
 }
