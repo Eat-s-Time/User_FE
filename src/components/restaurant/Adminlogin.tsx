@@ -1,21 +1,40 @@
-import { useState } from "react";
-import { useHistory } from "react-router";
+import axios from "axios";
+import React, { useState, FormEvent } from "react";
+import { useHistory } from "react-router-dom";
 import styles from "./Adminlogin.module.scss";
 
+interface LoginResponse {
+  success: boolean;
+}
+
 function Adminlogin() {
-  const [userID, setUserID] = useState("");
-  const [password, setPassword] = useState("");
-  const [login, setLogin] = useState(false);
+  const [userID, setUserID] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const history = useHistory();
 
-  const handleLogin = () => {
-    if (userID === "admin" && password === "admin") {
-      setLogin(true);
-      history.push("/admin");
-    } else {
-      console.log("로그인 실패");
+  const login = async () => {
+    try { //백엔드통신 부분
+      const response = await axios.post<LoginResponse>("http://localhost:9000/api/login", {
+        username: userID,
+        password: password,
+      });
+
+      if (response.data.success) {
+        history.push("/adminstart");
+      } else {
+        setError("아이디 또는 비밀번호를 확인해주세요.");
+      }
+    } catch (error) {
+      console.error("로그인 요청 중 에러 발생", error);
+      setError("로그인 요청 중 에러 발생");
     }
+  };
+
+  const handleLogin = (event: FormEvent) => {
+    event.preventDefault();
+    login();
   };
 
   return (
@@ -24,9 +43,9 @@ function Adminlogin() {
       <h2 className={styles.eattitle}>Eat's Time</h2>
       <h1 className={styles.joinmessage}>
         잇츠타임 사장님들을 위한 전용 어드민 페이지입니다. <p></p>
-        입점 문의는 하단 [잇츠타임 입점상회]를 이용해주세요.  
+        입점 문의는 하단 [잇츠타임 입점상회]를 이용해주세요.
       </h1>
-      <div className={styles.logincontainer}>
+      <form className={styles.logincontainer} onSubmit={handleLogin}>
         <label>ID</label>
         <input 
           type="text" 
@@ -41,15 +60,14 @@ function Adminlogin() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="비밀번호"
         />
-      </div>
-      <button className={styles.loginbtn} onClick={handleLogin}>
-        로그인하기
-      </button>
+        <button type="submit" className={styles.loginbtn}>
+          로그인하기
+        </button>
+      </form>
       <h1 className={styles.admin}>잇츠타임 입점상회</h1>
-
       <h1 className={styles.joinmessage}>© 2023. Eat'sTime Corp., Inc. All rights reserved</h1>
     </div>
   );
 }
 
-export default Adminlogin;
+  export default Adminlogin;
