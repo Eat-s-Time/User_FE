@@ -123,9 +123,10 @@ function StartLogin() {
         <button className={styles.kakaologinbtn} onClick={KakaoLogin}>
           카카오로 빠르게 시작하기
         </button>
-        <button className={styles.kakaologinbtn} onClick={restauratClick}>
+        <h1>혹시 잇츠타임 입점주세요? </h1>
+        {/* <button className={styles.kakaologinbtn} onClick={restauratClick}>
           잇츠타임 입점하기
-        </button>
+        </button> */}
       </div>
     </div>
   );

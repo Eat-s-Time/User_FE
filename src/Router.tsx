@@ -6,6 +6,10 @@ import Companyset from "./components/Login/Companyset";
 import Detail from "./components/user/Detail";
 import Menu from "./components/user/Menu";
 import Waiting from "./components/user/waiting";
+import WaitingCheck from "./components/user/WaitingCheck";
+import WaitingOk from "./components/user/WaitingOK";
+import Join from "./components/Login/join";
+import Mypage from "./components/user/Mypage";
 
 function Router() {
   return (
@@ -19,6 +23,11 @@ function Router() {
         <Route path='/user/detail' component={Detail}/>
         <Route path='/user/menu' component={Menu}/>
         <Route path='/user/waiting' component={Waiting}/>
+        <Route path='/user/waitingCheck' component={WaitingCheck}/>
+        <Route path='/user/waitingok' component={WaitingOk}/>
+        <Route path='/user/mypage' component={Mypage}/>
+
+        <Route path='/user/join' component={Join}/>
       </Switch>
     </BrowserRouter>
   );

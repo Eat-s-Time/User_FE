@@ -1,0 +1,92 @@
+@import "../../assets/reset.css";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #000000;
+  height: 100%
+}
+
+.slidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-right: grey solid 1px;
+  color: white;
+  align-items: center; 
+}
+.baritemLayout {
+  display: flex;       /* Make this a flex container */
+  flex-direction: column;  /* Lay children out vertically */
+  height: 100vh;
+  gap: 10px;          /* Space between items */
+  z-index: 1;
+}
+.baritem {
+  color: white;
+  margin-top: 10vh;
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.active {
+  font-weight: bold;
+  color: orange;
+  cursor: pointer;
+}
+.right {
+  display: flex;
+  flex-direction: column; /* changed this from row to column */
+  height: max-content;
+  overflow-y: auto; /* add a vertical scrollbar if content overflows */
+}
+
+.menuitem {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center children horizontally */
+  justify-content: flex-end; /* align children to the bottom */
+  color: black;
+  border-radius: 10%;
+  width: 15vw;
+  height: 20vw;
+  padding: 10px; /* optional, to provide some space at the bottom */
+  cursor: pointer;
+
+}
+
+.menulayout {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* allows menu items to wrap to the next line */
+  align-items: center;
+  gap: 40px;
+  margin: 10%;
+}
+
+.menuname {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 10px;
+}
+.menuinfo{
+  font-size: 20px;
+  color: white;
+  margin-bottom: 5px;
+}
+.menunimg {
+  background-color: white;
+  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+

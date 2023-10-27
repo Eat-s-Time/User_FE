@@ -8,7 +8,7 @@ import Slidebar from "./Slidebar";
 function Menu() {
   const menuinfo = [
     {
-      menu: "김치라면",
+      menu: "김치 라면",
       price: 3000,
       img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
       txt: "얼큰한 맛의 김치국물이 끝내주는 라면",

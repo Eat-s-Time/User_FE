@@ -9,9 +9,10 @@ function Waiting() {
 
   const handleBooking = () => {
     if (window.confirm(`성인 ${adultCount}명, 유아 ${childCount}명으로 대기를 신청하시겠습니까?`)) {
-      history.push("/user/waiting"); // 확인 버튼을 누르면 "/waiting" 페이지로 이동합니다.
+      history.push("/user/waitingCheck"); 
     }
   };
+
 
   return (
     <div className={styles.container}>

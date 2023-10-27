@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import qs from "qs";
 import { useHistory } from "react-router-dom";
 import Slidebar from "./Slidebar";
 import styles from "./Detail.module.scss";
-// import logo from "../../assets/img/logo.png";
+
 
 function Detail() {
   const history = useHistory();
@@ -13,6 +10,16 @@ function Detail() {
       history.push("/user/waiting"); // 확인 버튼을 누르면 "/waiting" 페이지로 이동합니다.
     }
   };
+
+  // 백엔드 식당 정보 받아오기 (임시)
+  // const getRestaurantInfo = () => {
+    // axios.get("http://localhost:9000/restaurantInfo").then((res) => {
+    //   setRestaurantInfo(res.data);
+    // });
+  // return resInfo}
+
+
+
   const resInfo = [
     {
       name: "요우",
@@ -37,7 +44,7 @@ function Detail() {
           className={styles.Bannerpic}></div>
 
         <div className={styles.logoBanner}>
-          <div className={styles.logo}></div>
+        <img src="/assets/img/logo.png" alt="Logo" className={styles.logo} />
           <div className={styles.details}>
             <h1 className={styles.menuname}>{resInfo[0].name}</h1>
             <p className={styles.txt}>{resInfo[0].cate}</p>

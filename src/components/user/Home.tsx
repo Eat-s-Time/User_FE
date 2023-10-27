@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useHistory} from "react-router-dom";
 import styled from "styled-components";
+import Mypage from "./Mypage";
 
 
 const Wrapper = styled.div`
@@ -44,9 +45,7 @@ const OverView = styled.p`
   width: 50%; //없으면 끝까지 줄줄줄
   line-height: 1.5em; //폰트 크기의 1.5
 `;
-
 //슬라이더
-
 const Slider = styled.div`
   position: relative;
   top: -100px;
@@ -116,7 +115,7 @@ const RightSvg = styled(motion.svg)`
 
 const Item = styled(motion.div)<{ bgposter: string }>`
   background-color: white;
-  background-image: url("https://itimgstorage.blob.core.windows.net/source/img.jpg");
+  background-image: url(${props => props.bgposter});
   background-size: cover;
   background-position: center center;
   height: 400px;
@@ -131,8 +130,6 @@ const Item = styled(motion.div)<{ bgposter: string }>`
     transform-origin: center right;
   }
 `;
-
-
 
 const Info = styled(motion.div)`
   width: 100%;
@@ -173,8 +170,6 @@ const infoVariants = {
 };
 
 
-
-
 function Homelist() {
   const history = useHistory(); //여러 route 사이를 이동
 
@@ -200,23 +195,32 @@ function Homelist() {
     history.push("/user/detail");
 
   };
-
+// 식당리스트 받아오기 (임시)
+// const getRestaurantList = () => {
+//   axios.get("http://localhost:9000/restaurantList").then((res) => {
+//     setRestaurantList(res.data);  
+//});
   const dummyData = [
-    { id: 1, name: "김가네 한우곰탕", type: "한식", img: "public/assets/img/01.jpg"},
-    { id: 2, name: "아비꼬", type: "일식", img: "../../assets/img/02.jpg" },
-    { id: 3, name: "천안문", type: "중식",img: "../../assets/img/03.jpg" },
-    { id: 4, name: "만두대장만", type: "중식",img: "../../assets/img/05.png" },
-    { id: 5, name: "삼첩분식", type: "분식", img: "../../assets/img/06.jpg" },
-    { id: 6, name: "김가네 한우곰탕", type: "한식", img: "../../assets/img/01.jpg" },
-    { id: 7, name: "아비꼬", type: "일식", img: "../../assets/img/02.jpg" },
-    { id: 8, name: "천안문", type: "중식", img: "../../assets/img/03.jpg" },
-    { id: 9, name: "너먹어봤니?", type: "한식", img: "../../assets/img/04.jpg" },
-    { id: 10, name: "삼첩분식", type: "분식", img: "../../assets/img/05.png" },
-    { id: 11, name: "세상에서 제일 맛있는 식당", type: "식당", img: "../../assets/img/06.jpg" },
+    { id: 1, name: "김가네 한우곰탕", type: "한식", img: "/assets/img/01.jpg"},
+    { id: 2, name: "아비꼬", type: "일식", img: "/assets/img/02.jpg" },
+    { id: 3, name: "천안문", type: "중식",img: "/assets/img/03.jpg" },
+    { id: 4, name: "만두대장만", type: "중식",img: "/assets/img/05.png" },
+    { id: 5, name: "삼첩분식", type: "분식", img: "/assets/img/06.jpg" },
+    { id: 6, name: "김가네 한우곰탕", type: "한식", img: "/assets/img/01.jpg" },
+    { id: 7, name: "아비꼬", type: "일식", img: "/assets/img/02.jpg" },
+    { id: 8, name: "천안문", type: "중식", img: "/assets/img/03.jpg" },
+    { id: 9, name: "너먹어봤니?", type: "한식", img: "/assets/img/04.jpg" },
+    { id: 10, name: "삼첩분식", type: "분식", img: "/assets/img/05.png" },
+    { id: 11, name: "세상에서 제일 맛있는 식당", type: "식당", img: "/assets/img/06.jpg" },
+    { id: 12, name: "김가네 한우곰탕", type: "한식", img: "/assets/img/01.jpg" },
     // 여기에 더 많은 데이터를 추가할 수 있습니다.
   ];
   return (
     <Wrapper>
+      <Mypage/>
+      <div>
+        검색
+      </div>
       <Banner
         // bgposter에 값을 넣거나, 이 속성을 제거해주세요.
         bgposter="https://itimgstorage.blob.core.windows.net/source/bgposter.png">
@@ -248,7 +252,7 @@ function Homelist() {
                 layoutId={restaurant.id + ""}
                 key={restaurant.id}
                 whileHover="hover"
-                bgposter={restaurant.img}>
+                bgposter={restaurant.img}           >
                 <Info variants={infoVariants}>
                   <h3>{restaurant.name}</h3>
                   <h4>{restaurant.type}</h4>
