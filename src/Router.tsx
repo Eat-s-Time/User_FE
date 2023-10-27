@@ -10,12 +10,14 @@ import WaitingCheck from "./components/user/WaitingCheck";
 import WaitingOk from "./components/user/WaitingOK";
 import Join from "./components/Login/join";
 import Mypage from "./components/user/Mypage";
+import Adminlogin from "./components/restaurant/Adminlogin";
 
 function Router() {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path='/' component={StartLogin}/>
+        <Route path='/admin' component={Adminlogin}/>
         <Route path='/restaurantJoin' component={RestaurantJoin}/>
         <Route path='/waitingUser' component={StartLogin}/>
         <Route path='/user/company' component={Companyset}/>

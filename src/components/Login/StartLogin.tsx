@@ -93,7 +93,7 @@ function StartLogin() {
   };
 
   const restauratClick = () => {
-    history.push('/restaurantJoin')
+    history.push('/admin')
   }
   const getKakaoUser = async () => {
     try {
@@ -123,10 +123,8 @@ function StartLogin() {
         <button className={styles.kakaologinbtn} onClick={KakaoLogin}>
           카카오로 빠르게 시작하기
         </button>
-        <h1>혹시 잇츠타임 입점주세요? </h1>
-        {/* <button className={styles.kakaologinbtn} onClick={restauratClick}>
-          잇츠타임 입점하기
-        </button> */}
+        <h1  className={styles.admin} onClick={restauratClick}>잇츠타임 어드민으로 로그인하기 </h1>
+ 
       </div>
     </div>
   );
