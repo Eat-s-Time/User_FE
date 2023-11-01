@@ -11,6 +11,7 @@ import WaitingOk from "./components/user/WaitingOK";
 import Join from "./components/Login/join";
 import Mypage from "./components/user/Mypage";
 import Adminlogin from "./components/restaurant/Adminlogin";
+import WaitingList from "./components/restaurant/waiting/WaitingList";
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
       <Switch>
         <Route exact path='/' component={StartLogin}/>
         <Route path='/admin' component={Adminlogin}/>
+        <Route path='/waitinglist' component={WaitingList}/>
         <Route path='/restaurantJoin' component={RestaurantJoin}/>
         <Route path='/waitingUser' component={StartLogin}/>
         <Route path='/user/company' component={Companyset}/>

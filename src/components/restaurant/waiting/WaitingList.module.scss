@@ -1,0 +1,80 @@
+@import "../../../assets/reset.css";
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap");
+
+
+.background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+  }
+.container {
+  display: flex;
+  flex-direction: column;
+  font-family: "Noto Sans KR", sans-serif;
+  height: 100vh;
+  width: 60vw;
+  background: rgb(211,216,219);
+  padding: 20px;
+  border-radius: 8px;
+}
+.guestContainer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2vh;
+    border-radius: 10px;
+    justify-content: space-between;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f4f4f4;
+    
+  }
+
+.rankingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 1vw;
+  border: solid 1px #f4f4f4;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  .p {
+    font-size: 100px;
+    font-weight: bold;
+    color: orange;
+  }
+  .h1 {
+    font-size: 20px;
+    color: grey;
+  }
+}
+.btnContainer {
+    display: flex;
+    gap: 1vw;
+    justify-content: flex-end;
+    margin-right: 1vw;
+  }
+.bookbtn {
+  color: white;
+  background-color: orange;
+  width: 6vw;
+  height: 9vh;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 20px;
+  display: flex; // 추가된 속성
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+
+.guestInfoContainer {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    gap: 1vh;
+  }
