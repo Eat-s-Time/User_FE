@@ -14,6 +14,11 @@ function Adminlogin() {
 
   const history = useHistory();
 
+
+  const goBusinessMeet = () => {
+    history.push("/restaurantJoin");
+  }
+
   const login = async () => {
     try { //백엔드통신 부분
       const response = await axios.post<LoginResponse>("http://localhost:9000/api/login", {
@@ -60,11 +65,13 @@ function Adminlogin() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="비밀번호"
         />
+      {error && <div className={styles.errorMessage}>{error}</div>}
+
         <button type="submit" className={styles.loginbtn}>
           로그인하기
         </button>
       </form>
-      <h1 className={styles.admin}>잇츠타임 입점상회</h1>
+      <h1  onClick={ goBusinessMeet} className={styles.admin}>잇츠타임 입점상회</h1>
       <h1 className={styles.joinmessage}>© 2023. Eat'sTime Corp., Inc. All rights reserved</h1>
     </div>
   );

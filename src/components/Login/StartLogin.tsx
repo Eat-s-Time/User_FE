@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import qs from "qs";
 import styles from "../Login/StartLogin.module.scss";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 function StartLogin() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,11 +17,10 @@ function StartLogin() {
 
   //로그인을 작성하는 코드
 
-
   const KakaoLogin = () => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   };
-  const history = useHistory()
+  const history = useHistory();
   const getToken = async () => {
     const payload = qs.stringify({
       grant_type: "authorization_code",
@@ -40,7 +39,7 @@ function StartLogin() {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
-        }     
+        }
       );
       setToken(res.data.access_token);
       postToken(res.data.access_token);
@@ -72,11 +71,6 @@ function StartLogin() {
           console.log(error);
         });
 
-      // const response = await axios.post(
-      //   `http://localhost:9000/oauth/kakao`,
-      //   postToken
-      // );
-      // console.log("토큰 post 성공: ", response);
       setIsLoggedIn(true);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -89,12 +83,13 @@ function StartLogin() {
 
   if (isLoggedIn) {
     //./MainPage.tsx로 이동
-    history.push('/user/main')
-  };
-
-  const restauratClick = () => {
-    history.push('/admin')
+    history.push("/user/main");
   }
+
+  //식당 정보
+  const restauratClick = () => {
+    history.push("/admin");
+  };
   const getKakaoUser = async () => {
     try {
       const kakaoUser = await axios.get(`https://kapi.kakao.com/v2/user/me`, {
@@ -114,17 +109,21 @@ function StartLogin() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.left}>
-      </div>
+      <div className={styles.left}></div>
       <div className={styles.right}>
-      <img className={styles.logoimg}alt="logo" src="https://itimgstorage.blob.core.windows.net/source/mainLogo.png" />
+        <img
+          className={styles.logoimg}
+          alt="logo"
+          src="https://itimgstorage.blob.core.windows.net/source/mainLogo.png"
+        />
         <h2 className={styles.righttitle}>시간을 먹다</h2>
         <h2 className={styles.eattitle}>잇츠타임</h2>
         <button className={styles.kakaologinbtn} onClick={KakaoLogin}>
           카카오로 빠르게 시작하기
         </button>
-        <h1  className={styles.admin} onClick={restauratClick}>잇츠타임 어드민으로 로그인하기 </h1>
- 
+        <h1 className={styles.admin} onClick={restauratClick}>
+          잇츠타임 어드민으로 로그인하기{" "}
+        </h1>
       </div>
     </div>
   );
