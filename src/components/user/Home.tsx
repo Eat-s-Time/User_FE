@@ -226,8 +226,6 @@ function Homelist() {
   return (
 
       <Wrapper>
-      <Mypage />
-
         <div>검색</div>
         <Banner
           // bgposter에 값을 넣거나, 이 속성을 제거해주세요.

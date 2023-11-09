@@ -88,8 +88,8 @@ function StartLogin() {
 
   //식당 정보
   const restauratClick = () => {
-    history.push("/admin");
-  };
+    window.location.href = 'http://localhost:3001/';
+  }
   const getKakaoUser = async () => {
     try {
       const kakaoUser = await axios.get(`https://kapi.kakao.com/v2/user/me`, {

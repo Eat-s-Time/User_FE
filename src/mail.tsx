@@ -2,20 +2,19 @@ import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 
 
-function sendEmail(mail: string, recordResult: any[]) {
+function sendEmail(mail: string, message: string) {
     try {
-      const message = "굳굳"
   
       const templateParams = {
         to_email: mail,
-        from_name: "benary",
+        from_name: "Eat_Time",
         message: message,
       };
   
       emailjs
         .send(
           "Eat_Time", // 서비스 ID
-          "benary", // 템플릿 ID
+          "eatTime", // 템플릿 ID
           templateParams,
           "0-0VI020CMJ10b6EE" // public-key
         )

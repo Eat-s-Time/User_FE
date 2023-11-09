@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import StartLogin from "./components/Login/StartLogin";
-import RestaurantJoin from "./components/restaurant/RestaurantJoin";
 import Homelist from "./components/user/Home";
 import Companyset from "./components/Login/Companyset";
 import Detail from "./components/user/Detail";
@@ -10,17 +9,12 @@ import WaitingCheck from "./components/user/WaitingCheck";
 import WaitingOk from "./components/user/WaitingOK";
 import Join from "./components/Login/join";
 import Mypage from "./components/user/Mypage";
-import Adminlogin from "./components/restaurant/Adminlogin";
-import WaitingList from "./components/restaurant/waiting/WaitingList";
 
 function Router() {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path='/' component={StartLogin}/>
-        <Route path='/admin' component={Adminlogin}/>
-        <Route path='/waitinglist' component={WaitingList}/>
-        <Route path='/restaurantJoin' component={RestaurantJoin}/>
         <Route path='/waitingUser' component={StartLogin}/>
         <Route path='/user/company' component={Companyset}/>
         <Route path='/user/main' component={Homelist}/>
@@ -30,7 +24,7 @@ function Router() {
         <Route path='/user/waitingCheck' component={WaitingCheck}/>
         <Route path='/user/waitingok' component={WaitingOk}/>
         <Route path='/user/mypage' component={Mypage}/>
-
+        <Route path='/user/companyset' component={Companyset}/>
         <Route path='/user/join' component={Join}/>
       </Switch>
     </BrowserRouter>
