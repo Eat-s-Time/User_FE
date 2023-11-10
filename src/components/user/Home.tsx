@@ -2,7 +2,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import Mypage from "./Mypage";
 
 
 
@@ -39,7 +38,12 @@ const Title = styled.h2`
   color: white;
   margin-bottom: 50px;
 `;
-
+const Mypage = styled.p`
+  color: white;
+  font-size: 25px;
+  width: 50%; //없으면 끝까지 줄줄줄
+  line-height: 1.5em; //폰트 크기의 1.5
+`;
 const OverView = styled.p`
   color: white;
   font-size: 25px;
@@ -190,9 +194,15 @@ function Homelist() {
     setPage((prev) => prev - 1);
   };
 
-  const onClikDetail = () => {
-    history.push("/user/detail");
+  const onClickDetail = (id: number) => {
+    history.push(`/user/detail/${id}`);
   };
+
+  const onClickMypage = () => {
+    history.push(`/user/mypage`);
+  };
+
+
   // 식당리스트 받아오기 (임시)
   // const getRestaurantList = () => {
   //   axios.get("http://localhost:9000/restaurantList").then((res) => {
@@ -226,7 +236,7 @@ function Homelist() {
   return (
 
       <Wrapper>
-        <div>검색</div>
+       <Mypage onClick={onClickMypage}>마이페이지</Mypage>
         <Banner
           // bgposter에 값을 넣거나, 이 속성을 제거해주세요.
           bgposter="https://itimgstorage.blob.core.windows.net/source/bgposter.png">
@@ -254,7 +264,7 @@ function Homelist() {
               transition={{ type: "tween", duration: 0.5 }}>
               {dummyData.slice(6 * page, 6 * page + 6).map((restaurant) => (
                 <Item
-                  onClick={onClikDetail}
+                  onClick={()=> onClickDetail(restaurant.id)}
                   layoutId={restaurant.id + ""}
                   key={restaurant.id}
                   whileHover="hover"

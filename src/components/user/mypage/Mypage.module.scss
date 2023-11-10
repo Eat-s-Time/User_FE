@@ -1,0 +1,21 @@
+@import "../../../assets/reset.css";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+
+.container {
+  display: flex;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #000000;
+  height: 100vh;
+  color: white;
+  font-size: 40px;
+  gap: 10px;
+}
+
+.baritemLayout {
+  display: flex;       /* Make this a flex container */
+  flex-direction: column;  /* Lay children out vertically */
+  height: 100vh;
+  gap: 10px;          /* Space between items */
+  z-index: 1;
+}

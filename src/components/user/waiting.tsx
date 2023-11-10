@@ -1,18 +1,31 @@
 import React, { useState } from "react";
 import styles from "./waiting.module.scss";
 import { useHistory } from "react-router";
+import { useSetRecoilState } from "recoil";
+import { adultCountState, childCountState, storeState } from "../../recoil/atom";
 
 function Waiting() {
   const [adultCount, setAdultCount] = useState(1); // 성인 수 상태
   const [childCount, setChildCount] = useState(0); // 유아 수 상태
   const history = useHistory();
+  const setAdultAtom = useSetRecoilState(adultCountState);
+  const setChildAtom = useSetRecoilState(childCountState);
+  const seStoreAtom = useSetRecoilState(storeState);
 
+
+  
   const handleBooking = () => {
-    if (window.confirm(`성인 ${adultCount}명, 유아 ${childCount}명으로 대기를 신청하시겠습니까?`)) {
-      history.push("/user/waitingCheck"); 
+    if (
+      window.confirm(
+        `성인 ${adultCount}명, 유아 ${childCount}명으로 대기를 신청하시겠습니까?`
+      )
+    ) {
+      //recoil atom에 인원과 식당 정보 저장
+      setAdultAtom(adultCount);
+      setChildAtom(childCount);
+      history.push("/user/waitingCheck");
     }
   };
-
 
   return (
     <div className={styles.container}>

@@ -7,8 +7,7 @@ import Menu from "./components/user/Menu";
 import Waiting from "./components/user/waiting";
 import WaitingCheck from "./components/user/WaitingCheck";
 import WaitingOk from "./components/user/WaitingOK";
-import Join from "./components/Login/join";
-import Mypage from "./components/user/Mypage";
+import Mypage from "./components/user/mypage/MyPage";
 
 function Router() {
   return (
@@ -25,7 +24,6 @@ function Router() {
         <Route path='/user/waitingok' component={WaitingOk}/>
         <Route path='/user/mypage' component={Mypage}/>
         <Route path='/user/companyset' component={Companyset}/>
-        <Route path='/user/join' component={Join}/>
       </Switch>
     </BrowserRouter>
   );

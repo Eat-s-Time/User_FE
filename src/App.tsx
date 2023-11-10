@@ -6,9 +6,8 @@ import {
 
 function App() {
   return (
-    <RecoilRoot>
+
       <Router />
-    </RecoilRoot>
   );
 }
 

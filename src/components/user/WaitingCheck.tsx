@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import styles from "./waitingcheck.module.scss";
 import { useHistory } from "react-router";
+import { useRecoilValue } from 'recoil';
+import { adultCountState, childCountState, storeState } from "../../recoil/atom";
+
 
 function WaitingCheck() {
-  const [adultCount, setAdultCount] = useState(1); // 성인 수 상태
-  const [childCount, setChildCount] = useState(0); // 유아 수 상태
+  const adultCount = useRecoilValue(adultCountState);
+  const childCount = useRecoilValue(childCountState);
+  const store = useRecoilValue(storeState);
   const history = useHistory();
   const waitingNumber = 3;
 
@@ -22,11 +26,11 @@ function WaitingCheck() {
         <div className={styles.waitingbox}>
           <div className={styles.subdiv}>
             <div className={styles.subtitle}>매장명</div>
-            <div className={styles.summary}>후야</div>
+            <div className={styles.summary}>{store}</div>
           </div>
           <div className={styles.subdiv}>
             <div className={styles.subtitle}>인원</div>
-            <div className={styles.summary}>성인 1명 유아 1명</div>
+            <div className={styles.summary}>성인 {adultCount}명 유아 {childCount}명</div>
           </div>
         </div>
         <div className={styles.bookbtn} onClick={handleBooking}>

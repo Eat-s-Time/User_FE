@@ -1,12 +1,16 @@
 import { useHistory } from "react-router-dom";
 import Slidebar from "./Slidebar";
 import styles from "./Detail.module.scss";
-
+import { storeState } from "../../recoil/atom";
+import {useSetRecoilState } from "recoil";
 
 function Detail() {
   const history = useHistory();
+  const storeAtom =  useSetRecoilState(storeState);
   const handleBooking = () => {
     if (window.confirm(`${resInfo[0].waiting}팀이 대기중입니다. 대기를 신청하시겠습니까?`)) {
+      storeAtom(resInfo[0].name);
+      console.log(storeAtom);
       history.push("/user/waiting"); // 확인 버튼을 누르면 "/waiting" 페이지로 이동합니다.
     }
   };
