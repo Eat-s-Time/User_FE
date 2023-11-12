@@ -4,6 +4,8 @@ import qs from "qs";
 import styles from "./Menu.module.scss";
 import { useHistory } from "react-router-dom";
 import Slidebar from "./Slidebar";
+import { useRecoilValue } from "recoil";
+import { storeIdState } from "../../recoil/atom";
 
 function Menu() {
   const menuinfo = [
@@ -177,6 +179,25 @@ function Menu() {
       txt: "너 감자는 먹어봤니?",
     },
   ];
+  const storeId = useRecoilValue(storeIdState);
+
+
+
+const getMenuItems = () => {
+  try {
+    const response = axios.post(`http://localhost:9000/owner/stores/${storeId}/menus`)
+  console.log(response);
+  } catch (error) {
+    console.log("에러가 빨간색이고 뜨겁누 ㅋㅋ");
+    console.log( error);
+    
+  }
+};
+
+useEffect(() => {
+  getMenuItems();
+});
+
 
   const menuItems = menuinfo.map((item, index) => (
     <div key={index} className={styles.menuitem}>

@@ -15,3 +15,8 @@ export const storeState= atom({
     key: 'storeState',
     default: "",
   });
+
+  export const storeIdState= atom({
+    key: 'storeIdState',
+    default: 0,
+  });

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./waiting.module.scss";
 import { useHistory } from "react-router";
 import { useSetRecoilState } from "recoil";
-import { adultCountState, childCountState, storeState } from "../../recoil/atom";
+import { adultCountState, childCountState, storeState } from "../recoil/atom";
 
 function Waiting() {
   const [adultCount, setAdultCount] = useState(1); // 성인 수 상태
@@ -10,10 +10,9 @@ function Waiting() {
   const history = useHistory();
   const setAdultAtom = useSetRecoilState(adultCountState);
   const setChildAtom = useSetRecoilState(childCountState);
-  const seStoreAtom = useSetRecoilState(storeState);
 
 
-  
+
   const handleBooking = () => {
     if (
       window.confirm(
@@ -26,6 +25,11 @@ function Waiting() {
       history.push("/user/waitingCheck");
     }
   };
+
+  //백엔드 통신
+
+
+  //
 
   return (
     <div className={styles.container}>

@@ -1,12 +1,20 @@
 import { useHistory } from "react-router-dom";
 import Slidebar from "./Slidebar";
 import styles from "./Detail.module.scss";
-import { storeState } from "../../recoil/atom";
+import { storeIdState, storeState } from "../../recoil/atom";
 import {useSetRecoilState } from "recoil";
+import axios from "axios";
+import { useEffect } from "react";
 
 function Detail() {
   const history = useHistory();
   const storeAtom =  useSetRecoilState(storeState);
+  const storeIdAtom =  useSetRecoilState(storeIdState);
+  
+
+
+
+
   const handleBooking = () => {
     if (window.confirm(`${resInfo[0].waiting}팀이 대기중입니다. 대기를 신청하시겠습니까?`)) {
       storeAtom(resInfo[0].name);
@@ -14,15 +22,29 @@ function Detail() {
       history.push("/user/waiting"); // 확인 버튼을 누르면 "/waiting" 페이지로 이동합니다.
     }
   };
+  const path = window.location.pathname; // URL의 경로 부분을 가져옴
+  const segments = path.split('/'); // '/'를 기준으로 분할
+  const storeId = Number(segments.pop()); // 맨 마지막 요소를 제거하고 반환
 
-  // 백엔드 식당 정보 받아오기 (임시)
-  // const getRestaurantInfo = () => {
-    // axios.get("http://localhost:9000/restaurantInfo").then((res) => {
-    //   setRestaurantInfo(res.data);
-    // });
-  // return resInfo}
+useEffect(() => {
+  storeIdAtom(storeId);
+})
 
+  const getresInfo = () => {
 
+    try {
+      const response = axios.get(`http://localhost:9000/owner/${storeId}`)
+    console.log(response);
+    } catch (error) {
+      console.log("에러가 빨간색이고 뜨겁누 ㅋㅋ");
+      console.log( error);
+      
+    }
+  };
+  
+  useEffect(() => {
+    getresInfo();
+  });
 
   const resInfo = [
     {

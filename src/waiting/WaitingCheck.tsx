@@ -1,8 +1,7 @@
-import React, { useState } from "react";
 import styles from "./waitingcheck.module.scss";
 import { useHistory } from "react-router";
 import { useRecoilValue } from 'recoil';
-import { adultCountState, childCountState, storeState } from "../../recoil/atom";
+import { adultCountState, childCountState, storeState } from "../recoil/atom";
 
 
 function WaitingCheck() {
@@ -12,9 +11,11 @@ function WaitingCheck() {
   const history = useHistory();
   const waitingNumber = 3;
 
-
+//해당 코드는 localhost:3000번입니다. 
   const handleBooking = () => {
     if (window.confirm(`대기를 신청하시겠습니까?`)) {
+        //localhost:3001/waiting/{id}로 웨이팅 정보 바로 전송하는 코드 추가
+
       history.push("/user/waitingOK"); 
     }
   };

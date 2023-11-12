@@ -1,14 +1,12 @@
+import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-
-
 
 const Wrapper = styled.div`
   background-color: black;
   height: 2000px;
-  ;
 `;
 
 const Banner = styled.div<{ bgposter: string }>`
@@ -202,12 +200,21 @@ function Homelist() {
     history.push(`/user/mypage`);
   };
 
-
   // 식당리스트 받아오기 (임시)
-  // const getRestaurantList = () => {
-  //   axios.get("http://localhost:9000/restaurantList").then((res) => {
-  //     setRestaurantList(res.data);
-  //});
+  const getRestaurantList = () => {
+    try {
+      axios.get("http://localhost:9000/owner/select").then((res) => {
+        console.log(res);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getRestaurantList();
+  });
+
   const dummyData = [
     { id: 1, name: "김가네 한우곰탕", type: "한식", img: "/assets/img/01.jpg" },
     { id: 2, name: "아비꼬", type: "일식", img: "/assets/img/02.jpg" },
@@ -234,61 +241,60 @@ function Homelist() {
     // 여기에 더 많은 데이터를 추가할 수 있습니다.
   ];
   return (
+    <Wrapper>
+      <Mypage onClick={onClickMypage}>마이페이지</Mypage>
+      <Banner
+        // bgposter에 값을 넣거나, 이 속성을 제거해주세요.
+        bgposter="https://itimgstorage.blob.core.windows.net/source/bgposter.png">
+        <Title>용용선생</Title>
+        <OverView>
+          용용선생은 1930년대 홍콩만이 가진 독특한 분위기를 연출하였습니다.
+          영국의 지배를 받던 시기의 홍콩은 서양의 문화와 결합되어 새로운 분위를
+          자아냈고, 영국 신사들이 격식 없이 캐주얼하게 즐겼던 홍콩 뒷골목의
+          주점들을 모티브로 삼았습니다. 용용선생으로 걸어 들어올 때, 현실에서
+          벗어나 어딘가 새로운 공간으로 옮겨진 것 같은 기분을 느끼실 수
+          있습니다. 그 공간 속에서 재미있는 메뉴들과 바이주를 캐주얼하게
+          즐겨보세요.
+        </OverView>
+      </Banner>
+      <Slider id="Best">
+        <SliderTitle>가산 디지털단지 근처 식당</SliderTitle>
 
-      <Wrapper>
-       <Mypage onClick={onClickMypage}>마이페이지</Mypage>
-        <Banner
-          // bgposter에 값을 넣거나, 이 속성을 제거해주세요.
-          bgposter="https://itimgstorage.blob.core.windows.net/source/bgposter.png">
-          <Title>용용선생</Title>
-          <OverView>
-            용용선생은 1930년대 홍콩만이 가진 독특한 분위기를 연출하였습니다.
-            영국의 지배를 받던 시기의 홍콩은 서양의 문화와 결합되어 새로운
-            분위를 자아냈고, 영국 신사들이 격식 없이 캐주얼하게 즐겼던 홍콩
-            뒷골목의 주점들을 모티브로 삼았습니다. 용용선생으로 걸어 들어올 때,
-            현실에서 벗어나 어딘가 새로운 공간으로 옮겨진 것 같은 기분을 느끼실
-            수 있습니다. 그 공간 속에서 재미있는 메뉴들과 바이주를 캐주얼하게
-            즐겨보세요.
-          </OverView>
-        </Banner>
-        <Slider id="Best">
-          <SliderTitle>가산 디지털단지 근처 식당</SliderTitle>
-
-          <AnimatePresence initial={false} onExitComplete={toggleSlideNext}>
-            <SliderRow
-              variants={rowVariants}
-              key={page}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              transition={{ type: "tween", duration: 0.5 }}>
-              {dummyData.slice(6 * page, 6 * page + 6).map((restaurant) => (
-                <Item
-                  onClick={()=> onClickDetail(restaurant.id)}
-                  layoutId={restaurant.id + ""}
-                  key={restaurant.id}
-                  whileHover="hover"
-                  bgposter={restaurant.img}>
-                  <Info variants={infoVariants}>
-                    <h3>{restaurant.name}</h3>
-                    <h4>{restaurant.type}</h4>
-                  </Info>
-                </Item>
-              ))}
-              <SliderLeft onClick={onClikLeft}></SliderLeft>
-              <SliderRight onClick={onClcikSlid}>
-                <RightSvg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="1024"
-                  height="276.742"
-                  viewBox="0 0 1024 276.742">
-                  <motion.path d="..." />
-                </RightSvg>
-              </SliderRight>
-            </SliderRow>
-          </AnimatePresence>
-        </Slider>
-      </Wrapper>
+        <AnimatePresence initial={false} onExitComplete={toggleSlideNext}>
+          <SliderRow
+            variants={rowVariants}
+            key={page}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={{ type: "tween", duration: 0.5 }}>
+            {dummyData.slice(6 * page, 6 * page + 6).map((restaurant) => (
+              <Item
+                onClick={() => onClickDetail(restaurant.id)}
+                layoutId={restaurant.id + ""}
+                key={restaurant.id}
+                whileHover="hover"
+                bgposter={restaurant.img}>
+                <Info variants={infoVariants}>
+                  <h3>{restaurant.name}</h3>
+                  <h4>{restaurant.type}</h4>
+                </Info>
+              </Item>
+            ))}
+            <SliderLeft onClick={onClikLeft}></SliderLeft>
+            <SliderRight onClick={onClcikSlid}>
+              <RightSvg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1024"
+                height="276.742"
+                viewBox="0 0 1024 276.742">
+                <motion.path d="..." />
+              </RightSvg>
+            </SliderRight>
+          </SliderRow>
+        </AnimatePresence>
+      </Slider>
+    </Wrapper>
   );
 }
 export default Homelist;

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styles from "./waitingcheck.module.scss";
 import { useHistory } from "react-router";
 
