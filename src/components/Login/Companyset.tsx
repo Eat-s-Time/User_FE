@@ -1,24 +1,26 @@
 import { useState } from "react";
 import styles from "./Companyset.module.scss";
+import axios from "axios";
 
 function Companyset() {
   interface UserData {
     username: string;
-    email: string;
   }
 
   const [file, setFile] = useState<File | null>(null);
-  const [userData, setUserData] = useState<UserData>({ username: '', email: '' });
+  const [userData, setUserData] = useState<UserData>({ username: ''});
+  const [preview, setPreview] = useState<string | null>(null); // 이미지 미리보기
 
 
-
-  //---------------------------------이미지 업로드---------------------------------
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files[0]) {
-      setFile(files[0]);
-    }
-  };
+ //---------------------------------이미지 업로드---------------------------------
+ const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const files = event.target.files;
+  if (files && files[0]) {
+    setFile(files[0]);
+    setPreview(URL.createObjectURL(files[0])); // 선택한 이미지 미리보기 URL 설정
+    console.log(preview);
+  }
+};
 
 
  const handleSubmit = async (event: React.FormEvent) => {
@@ -27,28 +29,31 @@ function Companyset() {
       alert('이미지를 선택해주세요.');
       return;
     }
-
+    if(window.confirm("제출하시겠습니까?")) {
+     //백엔드 통신
     const formData = new FormData();
     formData.append('file', file);
     formData.append('username', userData.username);
-    formData.append('email', userData.email);
-
     try {
-      const response = await fetch('localhost:9000', {
-        method: 'POST',
-        body: formData,
+      const response = await axios.post('http://localhost:9000/user/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
-      if (response.ok) {
-        console.log('데이터가 서버로 전송되었습니다.');
-        // 응답 처리
+      if (response.status === 200) {
+        console.log('이미지가 서버로 전송되었습니다.');
       } else {
         console.error('서버 에러:', response);
       }
     } catch (error) {
       console.error('전송 중 에러 발생:', error);
     }
+    }
   };
+
+
+
   return (
     <div className={styles.container}>
       <div className={styles.innerContainer}>
@@ -63,15 +68,17 @@ function Companyset() {
           </h1>
         </div>
         <div className={styles.btnContainer}>
-             <input
-        type="file"
-        id="imageInput"
-        accept="image/*" // 이미지 파일만 선택
-        style={{ display: 'none' }} // 파일 입력 숨기기
-        onChange={handleImageUpload}
-      />
+        {preview && <img src={preview} alt="명함 미리보기" className={styles.preview} />}
+          <input
+            type="file"
+            id="imageInput"
+            accept="image/*" // 이미지 파일만 선택
+            style={{ display: 'none' }} // 파일 입력 숨기기
+            onChange={handleImageUpload}
+          />
           <button className={styles.btn} onClick={() => document.getElementById('imageInput')?.click()}> 명함 인증하기 </button>
-          <button className={styles.btn}> 회사 메일 인증하기</button>
+
+          {file && <button className={styles.btn} onClick={handleSubmit}>제출하기</button>}
         </div>
       </div>
     </div>

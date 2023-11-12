@@ -67,8 +67,9 @@ function StartLogin() {
           console.log(res.data);
         })
         .catch((error) => {
-          console.log("실패");
-          console.log(error);
+          window.location.href = 'http://localhost:3000/user/companyset';
+          // console.log("실패");
+          // console.log(error);
         });
 
       setIsLoggedIn(true);

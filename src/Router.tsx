@@ -4,9 +4,9 @@ import Homelist from "./components/user/Home";
 import Companyset from "./components/Login/Companyset";
 import Detail from "./components/user/Detail";
 import Menu from "./components/user/Menu";
-import Waiting from "./components/user/waiting";
-import WaitingCheck from "./components/user/WaitingCheck";
-import WaitingOk from "./components/user/WaitingOK";
+import Waiting from "./components/waiting/waiting";
+import WaitingCheck from "./components/waiting/WaitingCheck";
+import WaitingOk from "./components/waiting/WaitingOK";
 import Mypage from "./components/user/mypage/MyPage";
 
 function Router() {
