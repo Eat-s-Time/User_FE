@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./Companyset.module.scss";
 import axios from "axios";
+import { useHistory } from "react-router";
 
 function Companyset() {
   interface UserData {
@@ -10,7 +11,7 @@ function Companyset() {
   const [file, setFile] = useState<File | null>(null);
   const [userData, setUserData] = useState<UserData>({ username: ''});
   const [preview, setPreview] = useState<string | null>(null); // 이미지 미리보기
-
+  const history = useHistory();
 
  //---------------------------------이미지 업로드---------------------------------
  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +23,7 @@ function Companyset() {
   }
 };
 
-
+const userId = 1;
  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!file) {
@@ -35,24 +36,25 @@ function Companyset() {
     formData.append('file', file);
     formData.append('username', userData.username);
     try {
-      const response = await axios.post('http://localhost:9000/user/upload', formData, {
+      const response = await axios.post(`http://localhost:9000/${userId}/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
       if (response.status === 200) {
-        console.log('이미지가 서버로 전송되었습니다.');
+        history.push('/user/main');
       } else {
-        console.error('서버 에러:', response);
+        alert(`명함 업로드에 실패했습니다. ${response.status}`);
+        console.error('명함 업로드 에러:', response);
+
       }
     } catch (error) {
-      console.error('전송 중 에러 발생:', error);
+      alert(`명함 업로드에 실패했습니다.`);
+      console.error('명함 업로드 중 에러 발생:', error);
     }
     }
   };
-
-
 
   return (
     <div className={styles.container}>

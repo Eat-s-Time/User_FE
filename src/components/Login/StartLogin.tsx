@@ -84,7 +84,7 @@ function StartLogin() {
 
   if (isLoggedIn) {
     //./MainPage.tsx로 이동
-    history.push("/user/main");
+    history.push("/user/companyset");
   }
 
   //식당 정보

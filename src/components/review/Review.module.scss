@@ -13,6 +13,12 @@
   justify-content: center;
   gap: 3vh;
 }
+.right {
+  display: flex;
+  flex-direction: column; /* changed this from row to column */
+  height: max-content;
+  overflow-y: auto; /* add a vertical scrollbar if content overflows */
+}
 
 .reviewContainer {
     width: 60vw;

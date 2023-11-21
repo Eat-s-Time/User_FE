@@ -117,9 +117,9 @@ const RightSvg = styled(motion.svg)`
   }
 `;
 
-const Item = styled(motion.div)<{ bgposter: string }>`
+const Item = styled(motion.div)<{ bgposter?: string }>`
   background-color: white;
-  background-image: url(${(props) => props.bgposter});
+  background-image: url(${(props) => props.bgposter || "https://itimgstorage.blob.core.windows.net/source/bgposter.png"});
   background-size: cover;
   background-position: center center;
   height: 400px;
@@ -181,7 +181,7 @@ interface Restaurant {
 
 function Homelist() {
   const history = useHistory(); //여러 route 사이를 이동
-
+  const [restaurantData, setRestaurantData] = useState<Restaurant[]>([]);
   const [page, setPage] = useState(0);
   // const onClcikSlid = () => setPage((prev) => prev + 1);
   //빠르게 클릭했을 때 행이 exit하는 도중 다음 row가 사라져 gap이 넓어지는 오류 방지
@@ -200,34 +200,35 @@ function Homelist() {
     setPage((prev) => prev - 1);
   };
 
-  const onClickDetail = (id: number) => {
-    history.push(`/user/detail/${id}`);
-  };
 
-  let restaurantData: Restaurant[] = [];
-  // 식당리스트 
-  const getRestaurantList = () => {
+  const getRestaurantList = async () => {
     try {
-      axios.get("http://localhost:9000/owner/select/stores").then((res) => {
-        console.log(res.data);
-        restaurantData = res.data.map((restaurant: Restaurant, index: number) => ({
-          id: restaurant.storeId,
-          name: restaurant.storeName,
-          type: restaurant.storeType,
-          img: `/assets/img/0${index + 1}.jpg`,
-        })
-        );
-      });
-      console.log(restaurantData);
+      const res = await axios.get("http://localhost:9000/owner/select/stores");
+      console.log("값", res.data);
+  
+      const data = res.data.map((restaurant: Restaurant, index: number) => ({
+        id: restaurant.storeId,
+        name: restaurant.storeName,
+        type: restaurant.storeType,
+        img: "https://itimgstorage.blob.core.windows.net/source/bgposter.png",
+      }));
+  
+      setRestaurantData(data);
+      console.log("레스토랑", restaurantData);
     } catch (error) {
       console.log(error);
     }
   };
+const onClickDetail = (id: number) => {
+  console.log("아이디",id);  // 여기서 id 값이 어떻게 출력되는지 확인합니다.
+  history.push(`/user/detail/${id}`);
+};
 
   useEffect(() => {
-    getRestaurantList();
-  });
-
+    getRestaurantList().then(() => {
+      console.log("레스토랑", restaurantData);
+    });
+  }, []);
 
   return (
     <Wrapper>
@@ -256,7 +257,7 @@ function Homelist() {
             animate="visible"
             exit="exit"
             transition={{ type: "tween", duration: 0.5 }}>
-            {restaurantData.slice(6 * page, 6 * page + 6).map((restaurant) => (
+           {restaurantData.length > 0 && restaurantData.slice(6 * page, 6 * page + 6).map((restaurant) => (
               <Item
                 onClick={() => onClickDetail(restaurant.storeId)}
                 layoutId={restaurant.storeId + ""}
