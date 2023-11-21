@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import SearchHeader from "../../SearchHeader";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -171,6 +172,13 @@ const infoVariants = {
   },
 };
 
+interface Restaurant {
+  storeId: number;
+  storeName: string;
+  storeType: string;
+  storeImg: string;
+}
+
 function Homelist() {
   const history = useHistory(); //여러 route 사이를 이동
 
@@ -196,16 +204,21 @@ function Homelist() {
     history.push(`/user/detail/${id}`);
   };
 
-  const onClickMypage = () => {
-    history.push(`/user/mypage`);
-  };
-
-  // 식당리스트 받아오기 (임시)
+  let restaurantData: Restaurant[] = [];
+  // 식당리스트 
   const getRestaurantList = () => {
     try {
-      axios.get("http://localhost:9000/owner/select").then((res) => {
-        console.log(res);
+      axios.get("http://localhost:9000/owner/select/stores").then((res) => {
+        console.log(res.data);
+        restaurantData = res.data.map((restaurant: Restaurant, index: number) => ({
+          id: restaurant.storeId,
+          name: restaurant.storeName,
+          type: restaurant.storeType,
+          img: `/assets/img/0${index + 1}.jpg`,
+        })
+        );
       });
+      console.log(restaurantData);
     } catch (error) {
       console.log(error);
     }
@@ -215,36 +228,11 @@ function Homelist() {
     getRestaurantList();
   });
 
-  const dummyData = [
-    { id: 1, name: "김가네 한우곰탕", type: "한식", img: "/assets/img/01.jpg" },
-    { id: 2, name: "아비꼬", type: "일식", img: "/assets/img/02.jpg" },
-    { id: 3, name: "천안문", type: "중식", img: "/assets/img/03.jpg" },
-    { id: 4, name: "만두대장만", type: "중식", img: "/assets/img/05.png" },
-    { id: 5, name: "삼첩분식", type: "분식", img: "/assets/img/06.jpg" },
-    { id: 6, name: "김가네 한우곰탕", type: "한식", img: "/assets/img/01.jpg" },
-    { id: 7, name: "아비꼬", type: "일식", img: "/assets/img/02.jpg" },
-    { id: 8, name: "천안문", type: "중식", img: "/assets/img/03.jpg" },
-    { id: 9, name: "너먹어봤니?", type: "한식", img: "/assets/img/04.jpg" },
-    { id: 10, name: "삼첩분식", type: "분식", img: "/assets/img/05.png" },
-    {
-      id: 11,
-      name: "세상에서 제일 맛있는 식당",
-      type: "식당",
-      img: "/assets/img/06.jpg",
-    },
-    {
-      id: 12,
-      name: "김가네 한우곰탕",
-      type: "한식",
-      img: "/assets/img/01.jpg",
-    },
-    // 여기에 더 많은 데이터를 추가할 수 있습니다.
-  ];
+
   return (
     <Wrapper>
-      <Mypage onClick={onClickMypage}>마이페이지</Mypage>
+      <SearchHeader/>
       <Banner
-        // bgposter에 값을 넣거나, 이 속성을 제거해주세요.
         bgposter="https://itimgstorage.blob.core.windows.net/source/bgposter.png">
         <Title>용용선생</Title>
         <OverView>
@@ -268,16 +256,16 @@ function Homelist() {
             animate="visible"
             exit="exit"
             transition={{ type: "tween", duration: 0.5 }}>
-            {dummyData.slice(6 * page, 6 * page + 6).map((restaurant) => (
+            {restaurantData.slice(6 * page, 6 * page + 6).map((restaurant) => (
               <Item
-                onClick={() => onClickDetail(restaurant.id)}
-                layoutId={restaurant.id + ""}
-                key={restaurant.id}
+                onClick={() => onClickDetail(restaurant.storeId)}
+                layoutId={restaurant.storeId + ""}
+                key={restaurant.storeId}
                 whileHover="hover"
-                bgposter={restaurant.img}>
+                bgposter={restaurant.storeImg}>
                 <Info variants={infoVariants}>
-                  <h3>{restaurant.name}</h3>
-                  <h4>{restaurant.type}</h4>
+                  <h3>{restaurant.storeName}</h3>
+                  <h4>{restaurant.storeType}</h4>
                 </Info>
               </Item>
             ))}

@@ -4,205 +4,53 @@ import qs from "qs";
 import styles from "./Menu.module.scss";
 import { useHistory } from "react-router-dom";
 import Slidebar from "./Slidebar";
-import { useRecoilValue } from "recoil";
-import { storeIdState } from "../../recoil/atom";
+
+interface menuResponse {
+  menuName: string;
+  menuPrice: number;
+  menuInfo: string;
+}
+
+interface menuInfo {
+  name: string;
+  img: string;
+  txt: string;
+  price: number;
+}
 
 function Menu() {
-  const menuinfo = [
-    {
-      menu: "김치 라면",
-      price: 3000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "얼큰한 맛의 김치국물이 끝내주는 라면",
-    },
-    {
-      menu: "열라면",
-      price: 4000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "얼큰한 맛 때문에 열이 나요",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
+  const [menuInfo, setMenuInfo] = useState<menuInfo[]>([]); // 이 부분은 useState를 사용해도 됩니다.
 
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-    {
-      menu: "감자라면",
-      price: 2000,
-      img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
-      txt: "너 감자는 먹어봤니?",
-    },
-  ];
-  const storeId = useRecoilValue(storeIdState);
+  const path = window.location.pathname; // URL의 경로 부분을 가져옴
+  const segments = path.split("/"); // '/'를 기준으로 분할
+  const storeId = Number(segments.pop()); // 맨 마지막 요소를 제거하고 반환
 
+  const getMenuItems = async () => {
+    try {
+      const response = await axios.get<menuResponse[]>(
+        `http://localhost:9000/owner/stores/${storeId}/menus`
+      );
+      console.log("메뉴", response.data);
+      const newMenuInfo = response.data.map((item) => ({
+        price: item.menuPrice,
+        txt: item.menuInfo,
+        name: item.menuName,
+        img: "https://itimgstorage.blob.core.windows.net/source/img.jpg",
+      }));
+      setMenuInfo(newMenuInfo);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
+    getMenuItems();
+  });
 
-const getMenuItems = () => {
-  try {
-    const response = axios.post(`http://localhost:9000/owner/stores/${storeId}/menus`)
-  console.log(response);
-  } catch (error) {
-    console.log("에러가 빨간색이고 뜨겁누 ㅋㅋ");
-    console.log( error);
-    
-  }
-};
-
-useEffect(() => {
-  getMenuItems();
-});
-
-
-  const menuItems = menuinfo.map((item, index) => (
+  const menuItems = menuInfo.map((item, index) => (
     <div key={index} className={styles.menuitem}>
-      <img className={styles.menunimg} src={item.img} alt={item.menu} />
-      <h1 className={styles.menuname}>{item.menu}</h1>
+      <img className={styles.menunimg} src={item.img} alt={item.name} />
+      <h1 className={styles.menuname}>{item.name}</h1>
       <h1 className={styles.menuinfo}>{item.price}원</h1>
       <p className={styles.menuinfo}>{item.txt}</p>
     </div>

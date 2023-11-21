@@ -9,6 +9,7 @@ import WaitingCheck from "./waiting/WaitingCheck";
 import WaitingOk from "./waiting/WaitingOK";
 import Mypage from "./components/user/mypage/MyPage";
 import EditProfile from "./components/user/mypage/EditProfile";
+import Review from "./components/review/Review";
 
 function Router() {
   return (
@@ -26,6 +27,7 @@ function Router() {
         <Route path='/user/mypage' component={Mypage}/>
         <Route path='/user/companyset' component={Companyset}/>
         <Route path='/user/editprofile' component={EditProfile}/>
+        <Route path='/user/review' component={Review}/>
       </Switch>
     </BrowserRouter>
   );
