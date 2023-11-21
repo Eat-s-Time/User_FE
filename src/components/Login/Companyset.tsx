@@ -36,7 +36,7 @@ const userId = 1;
     formData.append('file', file);
     formData.append('username', userData.username);
     try {
-      const response = await axios.post(`http://localhost:9000/${userId}/upload`, formData, {
+      const response = await axios.post(`http://localhost:9000/user/${userId}/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
