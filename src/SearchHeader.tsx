@@ -55,17 +55,28 @@ const SearchBar = styled(motion.input)`
 const SearchResult = styled(motion.div)`
   transform-origin: right center;
   margin-right: 50px;
-  height: 40px;
-  width: 270px;
+  margin-top: 52px;
+  height: 300px;
+  width: 332px;
   position: absolute;
   right: 0px;
-  padding: 5px 30px;
   z-index: -1;
   font-size: 16px;
   color: white;
   background-color: black;
-  border: 1px solid white;
 `;
+
+const SearchResultItem = styled(motion.div)`
+  font-size: 16px;
+  margin-top: 10px;
+  border-bottom: 1px solid grey;
+`;
+const SearchResultText = styled(motion.h1)`
+  font-size: 16px;
+  margin-bottom: 10px;
+  margin-left: 30px;
+`;
+
 const NavIn = styled.div`
   display: flex;
   align-items: center;
@@ -114,9 +125,13 @@ const Item = styled.li`
     color: darkgray;
   }
 `;
-
-interface IForm {
-  keyword: string;
+interface Store {
+  storeId: number;
+  storeName: string;
+  storePhone: string;
+  storeContent: string;
+  storeLocation: string;
+  // ...other properties
 }
 
 function SearchHeader() {
@@ -129,12 +144,9 @@ function SearchHeader() {
   const { scrollY } = useViewportScroll();
   const [keywords, setKeywords] = useState("");
   const history = useHistory();
-  const { register, watch } = useForm<IForm>();
-  const [searchResults, setSearchResults] = useState([]); //검색 결과
-
-  useEffect(() => {
-    getSearch();
-  }, [keywords]);
+  const [searchResults, setSearchResults] = useState<
+    { id: number; name: string }[]
+  >([]);
 
   //검색바 열었을 때 애니메이션
   const toggleSearch = () => {
@@ -164,22 +176,30 @@ function SearchHeader() {
   // };
 
   //---------------검색기능---------------------
-
   const getSearch = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:9000/owner/storename/${keywords}`
+        `http://localhost:9000/owner/storename/${keywords}/search`
       );
-      console.log("검색어", response.data.storeName);
-      setSearchResults(response.data.storeName);
+      const stores = response.data.map((store: Store) => ({
+        id: store.storeId,
+        name: store.storeName,
+      }));
+      setSearchResults(stores);
+      console.log("검색 결과", searchResults);
     } catch (error) {
       console.error("검색 api 오류: ", error);
     }
   };
 
   useEffect(() => {
-    setKeywords(watch("keyword"));
-  }, [watch]);
+    getSearch();
+  }, [keywords]);
+  console.log("검색어", keywords);
+
+  const SearchResultItemClicked = (id: number) => {
+    history.push(`/user/detail/${id}`);
+  };
 
   return (
     <>
@@ -209,21 +229,30 @@ function SearchHeader() {
                 clipRule="evenodd"
               />
             </motion.svg>
-            <form>
+            <form onSubmit={(e) => e.preventDefault()}>
               <SearchBar
-                {...register("keyword", { required: true, minLength: 1 })}
+                onInput={(e) =>
+                  setKeywords((e.target as HTMLInputElement).value)
+                }
                 animate={serachBarAnimation}
                 initial={{ scaleX: 0 }}
                 transition={{ type: "linear" }}
                 placeholder="식당을 검색해보세요"
               />
-              {searchResults.map((result, index) => (
-                <SearchResult key={index}>{result}</SearchResult>
-              ))}
+              {keywords ? (
+                <SearchResult>
+                  {searchResults.map((result) => (
+                    <SearchResultItem
+                      key={result.id}
+                      onClick={() => SearchResultItemClicked(result.id)}>
+                      <SearchResultText>{result.name}</SearchResultText>
+                    </SearchResultItem>
+                  ))}
+                </SearchResult>
+              ) : null}
             </form>
           </Search>
-        </NavIn>{" "}
-        {/* 이 부분이 누락되어 있습니다. */}
+        </NavIn>
       </Nav>
     </>
   );

@@ -68,7 +68,7 @@ function Detail() {
             address: response.data.storeLocation,
             time: response.data.openingHour,
             phone: response.data.storePhone,
-            waiting: 12, // 이 값이 서버 응답에 포함되어 있지 않다면, 적절한 값을 설정하세요.
+            waiting: 12,
           },
         ]);
       } catch (error) {

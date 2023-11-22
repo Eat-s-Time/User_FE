@@ -184,7 +184,7 @@ function Homelist() {
   const [restaurantData, setRestaurantData] = useState<Restaurant[]>([]);
   const [page, setPage] = useState(0);
   // const onClcikSlid = () => setPage((prev) => prev + 1);
-  //빠르게 클릭했을 때 행이 exit하는 도중 다음 row가 사라져 gap이 넓어지는 오류 방지
+  // 빠르게 클릭했을 때 행이 exit하는 도중 다음 row가 사라져 gap이 넓어지는 오류 방지
   const [slideNext, setSlideNext] = useState(false);
   //슬라이드 onClick함수: 클릭스 인덱스가 +1
   const onClcikSlid = () => {
@@ -201,35 +201,33 @@ function Homelist() {
   };
 
 
-  const getRestaurantList = async () => {
-    try {
-      const res = await axios.get("http://localhost:9000/owner/select/stores");
-      console.log("값", res.data);
-  
-      const data = res.data.map((restaurant: Restaurant, index: number) => ({
-        id: restaurant.storeId,
-        name: restaurant.storeName,
-        type: restaurant.storeType,
-        img: "https://itimgstorage.blob.core.windows.net/source/bgposter.png",
-      }));
-  
-      setRestaurantData(data);
-      console.log("레스토랑", restaurantData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
 const onClickDetail = (id: number) => {
-  console.log("아이디",id);  // 여기서 id 값이 어떻게 출력되는지 확인합니다.
+  console.log(id);
   history.push(`/user/detail/${id}`);
 };
 
   useEffect(() => {
-    getRestaurantList().then(() => {
-      console.log("레스토랑", restaurantData);
-    });
+    const getRestaurantList = async () => {
+      try {
+        const res = await axios.get("http://localhost:9000/owner/select/stores");
+        const data = res.data.map((restaurant: Restaurant, index: number) => ({
+          storeId: restaurant.storeId,
+          storeName: restaurant.storeName,
+          storeType: restaurant.storeType,
+          storeimg: "https://itimgstorage.blob.core.windows.net/source/bgposter.png",
+        }));
+        console.log("불러온 값", data);
+        setRestaurantData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getRestaurantList();
   }, []);
-
+  useEffect(() => {
+    console.log("useState에 들어온 값", restaurantData);
+  }, [restaurantData]);
   return (
     <Wrapper>
       <SearchHeader/>
@@ -257,7 +255,7 @@ const onClickDetail = (id: number) => {
             animate="visible"
             exit="exit"
             transition={{ type: "tween", duration: 0.5 }}>
-           {restaurantData.length > 0 && restaurantData.slice(6 * page, 6 * page + 6).map((restaurant) => (
+           {restaurantData.slice(6 * page, 6 * page + 6).map((restaurant) => (
               <Item
                 onClick={() => onClickDetail(restaurant.storeId)}
                 layoutId={restaurant.storeId + ""}
