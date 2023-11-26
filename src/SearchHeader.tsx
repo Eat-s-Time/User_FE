@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import axios from "axios";
 
 const Nav = styled(motion.nav)`
@@ -95,17 +94,7 @@ const Logo = styled(motion.h1)`
   color: orange;
 `;
 
-const logoVariants = {
-  normal: {
-    fillOpacity: 1,
-  },
-  active: {
-    fillOpacity: [0, 1, 0, 1],
-    transition: {
-      repeat: Infinity,
-    },
-  },
-};
+
 // 아이템 리스트
 const Items = styled.ul`
   display: flex;
@@ -176,26 +165,26 @@ function SearchHeader() {
   // };
 
   //---------------검색기능---------------------
-  const getSearch = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:9000/owner/storename/${keywords}/search`
-      );
-      const stores = response.data.map((store: Store) => ({
-        id: store.storeId,
-        name: store.storeName,
-      }));
-      setSearchResults(stores);
-      console.log("검색 결과", searchResults);
-    } catch (error) {
-      console.error("검색 api 오류: ", error);
-    }
-  };
+
 
   useEffect(() => {
+    const getSearch = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:9000/owner/storename/${keywords}/search`
+        );
+        const stores = response.data.map((store: Store) => ({
+          id: store.storeId,
+          name: store.storeName,
+        }));
+        setSearchResults(stores);
+      } catch (error) {
+        console.error("검색 api 오류: ", error);
+      }
+    };
     getSearch();
   }, [keywords]);
-  console.log("검색어", keywords);
+
 
   const SearchResultItemClicked = (id: number) => {
     history.push(`/user/detail/${id}`);
@@ -205,7 +194,7 @@ function SearchHeader() {
     <>
       <Nav variants={navScrollVar} animate={navAnimation} initial={"top"}>
         <NavIn>
-          <Logo onClick={getSearch}>잇츠타임</Logo>
+          <Logo >잇츠타임</Logo>
           <Items>
             <Item>
               <Link to="/user/mypage">

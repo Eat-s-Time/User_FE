@@ -77,7 +77,14 @@ function Detail() {
     };
     getresInfo();
   }, [storeId]); // 의존성 배열에 storeId를 추가
-
+  
+  useEffect(() => {
+    return history.listen((location) => { 
+      if (history.action === 'POP') {
+        history.push('/user/main');
+      }
+    }) 
+  }, [history])
   return (
     <div className={styles.container}>
       <Slidebar />

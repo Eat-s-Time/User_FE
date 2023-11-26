@@ -37,12 +37,7 @@ const Title = styled.h2`
   color: white;
   margin-bottom: 50px;
 `;
-const Mypage = styled.p`
-  color: white;
-  font-size: 25px;
-  width: 50%; //없으면 끝까지 줄줄줄
-  line-height: 1.5em; //폰트 크기의 1.5
-`;
+
 const OverView = styled.p`
   color: white;
   font-size: 25px;
@@ -181,16 +176,16 @@ interface Restaurant {
 
 function Homelist() {
   const history = useHistory(); //여러 route 사이를 이동
-  const [restaurantData, setRestaurantData] = useState<Restaurant[]>([]);
+  const [data, setData] = useState<Restaurant[]>([]); // state로 관리
   const [page, setPage] = useState(0);
   // const onClcikSlid = () => setPage((prev) => prev + 1);
-  // 빠르게 클릭했을 때 행이 exit하는 도중 다음 row가 사라져 gap이 넓어지는 오류 방지
+  //빠르게 클릭했을 때 행이 exit하는 도중 다음 row가 사라져 gap이 넓어지는 오류 방지
   const [slideNext, setSlideNext] = useState(false);
   //슬라이드 onClick함수: 클릭스 인덱스가 +1
   const onClcikSlid = () => {
     if (slideNext) return;
     toggleSlideNext(); //slideNext false로000
-    const maxIndx = Math.floor(12 / 6); // [총 수/슬라이더 갯수] 내림차순 page는 0에서 시작하므로,
+    const maxIndx = Math.floor(data.length / 6); // [총 수/슬라이더 갯수] 내림차순 page는 0에서 시작하므로,
     setSlideNext(true);
     setPage((prev) => (prev === maxIndx ? 0 : prev + 1)); //증가하고자 하는 인덱스가 max면, 0으로 되돌림 , 아니라면 인덱스에 +1
   };
@@ -201,33 +196,28 @@ function Homelist() {
   };
 
 
-
+  const getRestaurantList = async () => {
+    try {
+      const res = await axios.get("http://localhost:9000/owner/select/stores");
+      const storeResponse = res.data.map((restaurant: Restaurant) => ({
+        storeId: restaurant.storeId,
+        storeName: restaurant.storeName,
+        storeType: restaurant.storeType,
+        storeImg: "https://itimgstorage.blob.core.windows.net/source/bgposter.png",
+      }));
+      setData(storeResponse);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 const onClickDetail = (id: number) => {
-  console.log(id);
   history.push(`/user/detail/${id}`);
 };
 
   useEffect(() => {
-    const getRestaurantList = async () => {
-      try {
-        const res = await axios.get("http://localhost:9000/owner/select/stores");
-        const data = res.data.map((restaurant: Restaurant, index: number) => ({
-          storeId: restaurant.storeId,
-          storeName: restaurant.storeName,
-          storeType: restaurant.storeType,
-          storeimg: "https://itimgstorage.blob.core.windows.net/source/bgposter.png",
-        }));
-        console.log("불러온 값", data);
-        setRestaurantData(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getRestaurantList();
-  }, []);
-  useEffect(() => {
-    console.log("useState에 들어온 값", restaurantData);
-  }, [restaurantData]);
+  });
+
   return (
     <Wrapper>
       <SearchHeader/>
@@ -247,6 +237,7 @@ const onClickDetail = (id: number) => {
       <Slider id="Best">
         <SliderTitle>가산 디지털단지 근처 식당</SliderTitle>
 
+
         <AnimatePresence initial={false} onExitComplete={toggleSlideNext}>
           <SliderRow
             variants={rowVariants}
@@ -255,7 +246,7 @@ const onClickDetail = (id: number) => {
             animate="visible"
             exit="exit"
             transition={{ type: "tween", duration: 0.5 }}>
-           {restaurantData.slice(6 * page, 6 * page + 6).map((restaurant) => (
+           { data.length > 0 && data.slice(6 * page, 6 * page + 6).map((restaurant) => (
               <Item
                 onClick={() => onClickDetail(restaurant.storeId)}
                 layoutId={restaurant.storeId + ""}
