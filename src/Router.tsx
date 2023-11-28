@@ -40,7 +40,7 @@ function Router() {
         {isLogged ? (
           <>
             <Route path='/' exact render={() => <Redirect to="/user/main" />} />
-            <Route path='/user/companyset' exact render={() =><Redirect to="/user/main" />} />
+            <Route path='/user/company' component={() => <Redirect to="/user/main" />} />
             <PrivateRoute path='/user/main' component={Homelist} isLogged={isLogged} />
             <PrivateRoute path='/user/detail' component={Detail} isLogged={isLogged} />
             <PrivateRoute path='/user/menu' component={Menu} isLogged={isLogged} />
@@ -55,7 +55,7 @@ function Router() {
         ) : (
           <>
             <Route exact path='/' component={StartLogin} />
-            <Route path='/user/companyset' component={Companyset} />
+            <Route path='/user/company' component={Companyset} />
           </>
         )}
       </Switch>
