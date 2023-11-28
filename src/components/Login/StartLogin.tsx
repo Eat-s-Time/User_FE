@@ -4,11 +4,15 @@ import axios from "axios";
 import qs from "qs";
 import styles from "../Login/StartLogin.module.scss";
 import { useHistory } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { emailState, userIdState, userNameState } from "../../recoil/atom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  emailState,
+  loginState,
+  userIdState,
+  userNameState,
+} from "../../recoil/atom";
 
 function StartLogin() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState("");
   const CLIENT_ID = process.env.REACT_APP_REST_API_KEY;
   const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
@@ -19,7 +23,7 @@ function StartLogin() {
   const userIdAtom = useSetRecoilState(userIdState);
   const storeIdAtom = useSetRecoilState(userNameState);
   const emailAtom = useSetRecoilState(emailState);
-
+  const isLoggedState = useSetRecoilState(loginState);
   const KakaoLogin = () => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   };
@@ -65,20 +69,18 @@ function StartLogin() {
         // header에서 JSON 타입의 데이터라는 것을 명시
       })
         .then((res) => {
-          alert("성공");
+          getUserCheck(res.data.userId);
           // API로 부터 받은 데이터 출력
           userIdAtom(res.data.userId);
           storeIdAtom(res.data.userName);
           emailAtom(res.data.email);
           //회원정보가 있는지 확인하는 로직
-          getUserCheck(res.data.userId);
         })
         .catch((error) => {
           window.location.href = "http://localhost:3000/user/companyset";
           alert("실패");
           console.log(error);
         });
-      setIsLoggedIn(true);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log("토큰 에러: " + error.message);
@@ -87,28 +89,22 @@ function StartLogin() {
       }
     }
   };
-  
-  //회원정보가 있는지 확인하는 로직
-  const getUserCheck = (userId: number) => {
-    axios
-      .get(`http://localhost:9000/user/${userId}/check`)
-      .then((res) => {
-        if (res.data.business_card_img !== null) {
-          //명함 인증을 했을 경우,
-          history.push("/user/main");
-        } else {
-          history.push("/user/companyset");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
-  if (isLoggedIn) {
-    //./MainPage.tsx로 이동
-    history.push("/user/companyset");
-  }
+  //회원정보가 있는지 확인하는 로직
+  const getUserCheck = async (userId: number) => {
+    try {
+      const res = await axios.get(`http://localhost:9000/user/${userId}`);
+      if (res.data.businessCardImg !== null) {
+        console.log(res.data);
+        history.push("/user/main");
+      } else {
+        isLoggedState(true);
+        history.push("/user/companyset");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   //식당 정보
   const restauratClick = () => {
@@ -118,6 +114,12 @@ function StartLogin() {
   useEffect(() => {
     if (code) getToken();
   }, [code]);
+
+  const isLogged = useRecoilValue(loginState);
+
+  useEffect(() => {
+    isLogged && history.push("/user/main");
+  });
 
   return (
     <div className={styles.container}>

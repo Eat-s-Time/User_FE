@@ -45,3 +45,10 @@ export const storeState= atom({
     default: "",
     effects_UNSTABLE: [persistAtom]
   });
+
+
+  export const loginState = atom({
+    key: 'loginState',
+    default: false,
+    effects_UNSTABLE: [persistAtom], 
+  });
