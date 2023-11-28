@@ -4,18 +4,21 @@ import axios from "axios";
 import qs from "qs";
 import styles from "../Login/StartLogin.module.scss";
 import { useHistory } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { emailState, userIdState, userNameState } from "../../recoil/atom";
 
 function StartLogin() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState("");
-  const [userName, setUserName] = useState("");
   const CLIENT_ID = process.env.REACT_APP_REST_API_KEY;
   const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
   const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
   const params = new URL(document.location.toString()).searchParams;
   const code = params.get("code");
 
-  //로그인을 작성하는 코드
+  const userIdAtom = useSetRecoilState(userIdState);
+  const storeIdAtom = useSetRecoilState(userNameState);
+  const emailAtom = useSetRecoilState(emailState);
 
   const KakaoLogin = () => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
@@ -64,22 +67,42 @@ function StartLogin() {
         .then((res) => {
           alert("성공");
           // API로 부터 받은 데이터 출력
-          console.log(res.data);
+          userIdAtom(res.data.userId);
+          storeIdAtom(res.data.userName);
+          emailAtom(res.data.email);
+          //회원정보가 있는지 확인하는 로직
+          getUserCheck(res.data.userId);
         })
         .catch((error) => {
-          window.location.href = 'http://localhost:3000/user/companyset';
+          window.location.href = "http://localhost:3000/user/companyset";
           alert("실패");
           console.log(error);
         });
-
       setIsLoggedIn(true);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log("토큰 에러: " + error.message);
       } else {
-        console.log("토큰에러, 알 수 없는 오류");
+        console.log("토큰에러");
       }
     }
+  };
+  
+  //회원정보가 있는지 확인하는 로직
+  const getUserCheck = (userId: number) => {
+    axios
+      .get(`http://localhost:9000/user/${userId}/check`)
+      .then((res) => {
+        if (res.data.business_card_img !== null) {
+          //명함 인증을 했을 경우,
+          history.push("/user/main");
+        } else {
+          history.push("/user/companyset");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   if (isLoggedIn) {
@@ -89,19 +112,7 @@ function StartLogin() {
 
   //식당 정보
   const restauratClick = () => {
-    window.location.href = 'http://localhost:3001/';
-  }
-  const getKakaoUser = async () => {
-    try {
-      const kakaoUser = await axios.get(`https://kapi.kakao.com/v2/user/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setUserName(kakaoUser.data.properties.nickname);
-    } catch (error) {
-      console.log("사용자 정보 에러: " + error);
-    }
+    window.location.href = "http://localhost:3001/";
   };
 
   useEffect(() => {

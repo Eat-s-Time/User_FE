@@ -13,6 +13,7 @@ interface StoreResponse {
   storeLocation: string;
   openingHour: string;
   storePhone: string;
+  waitingPossible: boolean;
 }
 
 interface ResInfo {
@@ -24,6 +25,7 @@ interface ResInfo {
   time: string;
   phone: string;
   waiting: number;
+  waitingPossible: boolean;
 }
 
 function Detail() {
@@ -69,6 +71,7 @@ function Detail() {
             time: response.data.openingHour,
             phone: response.data.storePhone,
             waiting: 12,
+            waitingPossible: response.data.waitingPossible,
           },
         ]);
       } catch (error) {
@@ -107,9 +110,14 @@ function Detail() {
               <p className={styles.txt}>{resInfo[0].cate}</p>
               <p className={styles.txt}>{resInfo[0].txt}</p>
             </div>
-            <div className={styles.bookbtn} onClick={handleBooking}>
-              대기하기
-            </div>
+            {resInfo[0].waitingPossible 
+            ?  <div className={styles.bookbtn} onClick={handleBooking}>
+            대기하기
+          </div>
+          :  <div className={styles.bookready} >
+          대기 준비중
+        </div> }
+           
           </div>
         )}
 

@@ -54,6 +54,7 @@ function Menu() {
       <p className={styles.menuinfo}>{item.txt}</p>
     </div>
   ));
+  //뒤로가기 메인페이지로
   useEffect(() => {
     return history.listen((location) => {
       if (history.action === "POP") {
@@ -61,6 +62,8 @@ function Menu() {
       }
     });
   }, [history]);
+
+  
   return (
     <div className={styles.container}>
       <Slidebar />

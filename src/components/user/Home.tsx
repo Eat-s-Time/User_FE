@@ -178,8 +178,7 @@ function Homelist() {
   const history = useHistory(); //여러 route 사이를 이동
   const [data, setData] = useState<Restaurant[]>([]); // state로 관리
   const [page, setPage] = useState(0);
-  // const onClcikSlid = () => setPage((prev) => prev + 1);
-  //빠르게 클릭했을 때 행이 exit하는 도중 다음 row가 사라져 gap이 넓어지는 오류 방지
+
   const [slideNext, setSlideNext] = useState(false);
   //슬라이드 onClick함수: 클릭스 인덱스가 +1
   const onClcikSlid = () => {
