@@ -30,8 +30,10 @@ function Mypage() {
     },
   ];
 
-  const onClick = () => {
-    history.push("/user/editprofile");
+  const onClick = (type: string) => {
+    type === "history"
+      ? history.push("/user/history")
+      : history.push("/user/editprofile");
   };
   return (
     <div className={styles.container}>
@@ -43,17 +45,19 @@ function Mypage() {
         <p className={styles.Scheduled}>이용 예정</p>
         <h1 className={styles.waitingStore}>{waitingInfoList[0].store}</h1>
         <div className={styles.waitingLine}>
-          {" "}
           <h1>이용 예정시간</h1> <h1>{waitingInfoList[0].time}</h1>
         </div>
         <div className={styles.waitingLine}>
-          {" "}
           <h1>인원</h1>
           <h1>{waitingInfoList[0].number}</h1>
         </div>
       </div>
-      <h1 className={styles.line}>이용내역</h1>
-      <h1 className={styles.line} onClick={onClick}>내 정보 수정</h1>
+      <h1 className={styles.line} onClick={() => onClick("history")}>
+        이용내역
+      </h1>
+      <h1 className={styles.line} onClick={() => onClick("edit")}>
+        내 정보 수정
+      </h1>
     </div>
   );
 }

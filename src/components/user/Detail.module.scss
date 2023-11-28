@@ -51,8 +51,7 @@
   background-position: center;
   border: 3px solid white;
   border-radius: 50%;
-
-} 
+}
 .Bannerpic {
   display: flex;
   align-items: center;
@@ -63,10 +62,10 @@
   background-repeat: no-repeat;
   background-position: center;
   background-image: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 1),
-    rgba(0, 0, 0, 0)
-  ),
+      to right,
+      rgba(0, 0, 0, 1),
+      rgba(0, 0, 0, 0)
+    ),
     url("https://images.unsplash.com/photo-1611095772763-4b0b2b0b0b0b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmVhdXR5JTIwY2FyJTIwYmVhY2h8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80");
 }
 .logoBanner {
@@ -136,8 +135,11 @@
 .info {
   color: white;
   font-size: 18px;
-  text-align: center;
+  line-height: 1.5em; //폰트 크기의 1.5
+  word-break: normal; // 글자가 길어지면 자동으로 줄바꿈
+  max-width: 35vw; 
 }
+
 
 .infoLogo {
   color: white;

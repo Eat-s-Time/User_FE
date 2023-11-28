@@ -14,6 +14,7 @@ interface StoreResponse {
   openingHour: string;
   storePhone: string;
   waitingPossible: boolean;
+  storeFacilities: string[];
 }
 
 interface ResInfo {
@@ -26,6 +27,7 @@ interface ResInfo {
   phone: string;
   waiting: number;
   waitingPossible: boolean;
+  storeFacilities: string[];
 }
 
 function Detail() {
@@ -72,6 +74,7 @@ function Detail() {
             phone: response.data.storePhone,
             waiting: 12,
             waitingPossible: response.data.waitingPossible,
+            storeFacilities: response.data.storeFacilities,
           },
         ]);
       } catch (error) {
@@ -109,6 +112,7 @@ function Detail() {
               <h1 className={styles.menuname}>{resInfo[0].name}</h1>
               <p className={styles.txt}>{resInfo[0].cate}</p>
               <p className={styles.txt}>{resInfo[0].txt}</p>
+
             </div>
             {resInfo[0].waitingPossible 
             ?  <div className={styles.bookbtn} onClick={handleBooking}>
@@ -127,6 +131,10 @@ function Detail() {
             <p className={styles.info}>주소: {resInfo[0].address}</p>
             <p className={styles.info}>영업 시간: {resInfo[0].time}</p>
             <p className={styles.info}>전화번호: {resInfo[0].phone}</p>
+            <p className={styles.infoLogo}>편의시설</p>
+            <p className={styles.info}>{resInfo[0].storeFacilities.join(', ')}</p>
+
+
           </div>
         )}
       </div>
