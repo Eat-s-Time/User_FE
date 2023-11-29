@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import SearchHeader from "../../SearchHeader";
+import {useRecoilValue } from "recoil";
+import { userIdState } from "../../recoil/atom";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -178,8 +180,15 @@ function Homelist() {
   const history = useHistory(); //여러 route 사이를 이동
   const [data, setData] = useState<Restaurant[]>([]); // state로 관리
   const [page, setPage] = useState(0);
-
+  const [companyName, setCompany] = useState("");
+  const [add, setAdd] = useState("");
   const [slideNext, setSlideNext] = useState(false);
+  const userId = useRecoilValue(userIdState);
+
+
+
+
+
   //슬라이드 onClick함수: 클릭스 인덱스가 +1
   const onClcikSlid = () => {
     if (slideNext) return;
@@ -193,11 +202,31 @@ function Homelist() {
   const onClikLeft = () => {
     setPage((prev) => prev - 1);
   };
+  const getDistrict = (address: string): string => {
+    const splitAddress = address.split(' ');
+    console.log(splitAddress[1]);
+    return splitAddress[1];
+  };
+  //회사 및 주소 가져오기
+  const getCompany = async (userId: string) => {
+    try {
+      const res = await axios.get(`http://localhost:9000/user/${userId}`);
+      setCompany(res.data.companyName); //회사이름
+      const district = getDistrict(res.data.companyAddress);
+      setAdd(district); //회사주소
+      getRestaurantList();
 
 
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  //회사근처 식당 가져오기 
   const getRestaurantList = async () => {
     try {
-      const res = await axios.get("http://localhost:9000/owner/select/stores");
+      const res = await axios.get(`http://localhost:9000/searchStoreLocation/${add}`);
       const storeResponse = res.data.map((restaurant: Restaurant) => ({
         storeId: restaurant.storeId,
         storeName: restaurant.storeName,
@@ -214,7 +243,8 @@ const onClickDetail = (id: number) => {
 };
 
   useEffect(() => {
-    getRestaurantList();
+    console.log(userId);
+    getCompany(userId);
   });
 
   return (
@@ -234,7 +264,7 @@ const onClickDetail = (id: number) => {
         </OverView>
       </Banner>
       <Slider id="Best">
-        <SliderTitle>가산 디지털단지 근처 식당</SliderTitle>
+        <SliderTitle>{companyName} 근처 식당</SliderTitle>
 
 
         <AnimatePresence initial={false} onExitComplete={toggleSlideNext}>

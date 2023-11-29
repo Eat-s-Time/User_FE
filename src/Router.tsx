@@ -13,6 +13,7 @@ import Review from "./components/review/Review";
 import { loginState } from "./recoil/atom";
 import { useRecoilValue } from "recoil";
 import History from "./components/user/mypage/History";
+import EditCompany from "./components/user/mypage/EditCompany";
 
 interface PrivateRouteProps extends RouteProps {
   component: any;
@@ -53,6 +54,7 @@ function Router() {
             <PrivateRoute path='/user/editprofile' component={EditProfile} isLogged={isLogged} />
             <PrivateRoute path='/user/review' component={Review} isLogged={isLogged} />
             <PrivateRoute path='/user/history' component={History} isLogged={isLogged} />
+            <PrivateRoute path='/user/editcompany' component={EditCompany} isLogged={isLogged} />
           </>
         ) : (
           <>

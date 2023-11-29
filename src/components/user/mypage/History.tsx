@@ -4,97 +4,129 @@ import { useHistory } from "react-router";
 import axios from "axios";
 
 interface review {
-    userName: string;
-    reviewDate: string;
-    reviewRating: number;
-    reviewImg: string;
-    reviewContent: string;
-  }
-  function History() {
-    const history = useHistory();
-    const [data, setData] = useState<review[]>([]);
-  
-    const getReviewList = async () => {
-      try {
-        const res = await axios.get<review[]>(
-          "http://localhost:9000/user/{userId}/stores"
-        );
-        console.log("예약내역", res);
-        const reviewResponse = res.data.map((res) => ({
-          userName: res.userName,
-          reviewDate: res.reviewDate,
-          reviewRating: res.reviewRating,
-          reviewImg:
-            "https://itimgstorage.blob.core.windows.net/source/bgposter.png",
-          reviewContent: res.reviewContent,
-        }));
-        setData(reviewResponse);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    //임시데이터
-    const historyResponse = [
-      {
-        userName: "김지아",
-        reviewDate: "2023-11-27",
-        reviewRating: 5,
-        reviewContent: "음식이 매우 맛있고 서비스도 좋았습니다.",
-      },
-      {
-        userName: "박준혁",
-        reviewDate: "2023-11-27",
-        reviewRating: 4,
-        reviewContent: "분위기가 아늑하고 음식 맛이 훌륭해요.",
-      },
-      {
-        userName: "이하나",
-        reviewDate: "2023-11-27",
-        reviewRating: 3,
-        reviewContent: "가격 대비 만족스러운 식사였습니다.",
-      },
-      {
-        userName: "최윤정",
-        reviewDate: "2023-11-27",
-        reviewRating: 2,
-        reviewContent: "서비스가 느리고 개선이 필요합니다.",
-      },
-      {
-        userName: "정태원",
-        reviewDate: "2023-11-27",
-        reviewRating: 1,
-        reviewContent: "음식이 너무 짜서 불편했습니다.",
-      },
-    ];
-  
+  userName: string;
+  reviewDate: string;
+  reviewRating: number;
+  reviewImg: string;
+  reviewContent: string;
+}
+function History() {
+  const history = useHistory();
+  const [data, setData] = useState<review[]>([]);
 
-  
-    useEffect(() => {
-      return history.listen((location) => {
-        if (history.action === "POP") {
-          history.push("/user/mypage");
-        }
-      });
-    }, [history]);
-  
-    return (
-      <div className={styles.container}>
-        <div className={styles.right}>
-          <h1 className={styles.reviewtitle}>웨이팅 내역</h1>
-          {historyResponse.map((item, index) => (
-            <div className={styles.reviewContainer}>
-              <div key={index} className={styles.reviewitem}>
-                <h1 className={styles.reviewname}>{item.reviewRating}</h1>
-                <h1 className={styles.reviewname}>{item.userName}</h1>
-                <h1 className={styles.reviewinfo}>{item.reviewDate}</h1>
-                <p className={styles.reviewinfo}>{item.reviewContent}</p>
-              </div>
+  const getReviewList = async () => {
+    try {
+      const res = await axios.get<review[]>(
+        "http://localhost:9000/user/{userId}/stores"
+      );
+      console.log("예약내역", res);
+      const reviewResponse = res.data.map((res) => ({
+        userName: res.userName,
+        reviewDate: res.reviewDate,
+        reviewRating: res.reviewRating,
+        reviewImg:
+          "https://itimgstorage.blob.core.windows.net/source/bgposter.png",
+        reviewContent: res.reviewContent,
+      }));
+      setData(reviewResponse);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //임시데이터
+  const historyResponse = [
+    {
+      storeName: "김가네 김치찌개",
+      waitingTime: "2023-11-27 13:56",
+      numPeople: "성인 1명 아동 2명",
+    },
+    {
+      storeName: "이탈리아나 피자",
+      waitingTime: "2023-11-25 17:30",
+      numPeople: "성인 2명 아동 1명",
+    },
+    {
+      storeName: "중국집 볶음밥",
+      waitingTime: "2023-11-26 12:20",
+      numPeople: "성인 3명",
+    },
+    {
+      storeName: "베이커리 카페",
+      waitingTime: "2023-11-27 15:15",
+      numPeople: "성인 1명",
+    },
+    {
+      storeName: "한우갈비 전문점",
+      waitingTime: "2023-11-22 18:45",
+      numPeople: "성인 4명",
+    },
+    {
+      storeName: "해물탕 파티",
+      waitingTime: "2023-11-24 13:00",
+      numPeople: "성인 2명 아동 3명",
+    },
+    {
+      storeName: "돈까스 맛집",
+      waitingTime: "2023-11-23 14:10",
+      numPeople: "성인 1명 아동 1명",
+    },
+    {
+      storeName: "베트남 쌀국수",
+      waitingTime: "2023-11-30 12:30",
+      numPeople: "성인 3명",
+    },
+    {
+      storeName: "초밥 천국",
+      waitingTime: "2023-11-29 19:00",
+      numPeople: "성인 2명",
+    },
+    {
+      storeName: "매콤 닭발",
+      waitingTime: "2023-11-28 20:30",
+      numPeople: "성인 2명 아동 2명",
+    },
+  ];
+
+  useEffect(() => {
+    return history.listen((location) => {
+      if (history.action === "POP") {
+        history.push("/user/mypage");
+      }
+    });
+  }, [history]);
+
+  return (
+    <div className={styles.container}>
+      <h1 className={styles.historytitle}>웨이팅 내역</h1>
+      <div className={styles.listContainer}>
+        {historyResponse.map((item) => (
+          <div className={styles.historyContainer}>
+            <div className={styles.historyTxt}>
+            <div className={styles.horizonLine}> 
+            
+            <h1 className={styles.storeName}>{item.storeName}</h1>
+            <div>이용 완료</div>
+            
             </div>
-          ))}
-        </div>
+              <div className={styles.horizonLine}>
+                <h1>예약 시각</h1>
+                <h1 className={styles.numPeople}>{item.waitingTime}</h1>
+              </div>
+              <div className={styles.horizonLine}>
+                <h1>인원</h1>
+                <h1 className={styles.numPeople}>{item.numPeople}</h1>
+              </div>
+              <div className={styles.horizonLine}>
+              <div>매장 상세보기 </div>
+              <div>리뷰 작성하기 </div>
+            </div>
+            </div>
+           
+          </div>
+        ))}
       </div>
-    );
-  }
-  
-  export default History;
-  
+    </div>
+  );
+}
+
+export default History;
