@@ -15,7 +15,7 @@ function EditProfile() {
   const getUserInfo = async (userId: string) => {
     try {
         const res = await axios.get(`http://localhost:9000/user/${userId}`);
-        setUser(res.data); // 사용자 정보 전체를 상태에 저장
+        setUser(res.data); // 사용자 정보 전체를 상태에 저장 put을 하면 날아가니까...
         setNickname(res.data.nickname); //닉네임
         setEmail(res.data.email); // 이메일
         
@@ -38,7 +38,7 @@ function EditProfile() {
     if (window.confirm("정보를 수정하시겠습니까?")) {
       try {
         const updatedUser = {
-          ...user,
+          ...user, //수정안된 정보는 그대로
           nickname: nickName,
           email: email,
         };

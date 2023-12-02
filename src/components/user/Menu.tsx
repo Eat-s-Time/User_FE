@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./Menu.module.scss";
 import { useHistory } from "react-router-dom";
-import Slidebar from "./Slidebar";
+import Slidebar from "./Sidebar";
+
 
 interface menuResponse {
   menuName: string;

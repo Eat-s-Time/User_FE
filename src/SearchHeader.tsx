@@ -31,8 +31,9 @@ const HoverCircle = styled(motion.span)`
 const Search = styled.form`
   color: white;
   svg {
-    margin-top: 10px;
-    height: 23px;
+    height: 33px;
+    position: relative;
+    top: 40px;
   }
   margin-right: 105px;
 `;
@@ -69,6 +70,7 @@ const SearchResultItem = styled(motion.div)`
   font-size: 16px;
   margin-top: 10px;
   border-bottom: 1px solid grey;
+  cursor: pointer;
 `;
 const SearchResultText = styled(motion.h1)`
   font-size: 16px;
@@ -86,7 +88,7 @@ const navScrollVar = {
   scroll: { backgroundColor: "rgba(0,0,0,1)" },
 };
 
-const Logo = styled(motion.h1)`
+const Logo = styled.img`
   margin-left: 50px;
   margin-right: 50px;
   width: 95px;
@@ -111,7 +113,7 @@ const Item = styled.li`
   flex-direction: column;
   font-size: 20px;
   &:hover {
-    color: darkgray;
+    color: orange;
   }
 `;
 interface Store {
@@ -194,12 +196,12 @@ function SearchHeader() {
     <>
       <Nav variants={navScrollVar} animate={navAnimation} initial={"top"}>
         <NavIn>
-          <Logo >잇츠타임</Logo>
+          <Logo src="/assets/img/smallLogo.png"/> 
           <Items>
             <Item>
-              <Link to="/user/mypage">
+              <h1 onClick={()=>   history.push("/user/mypage")}>
                 마이페이지{myPageMatch && <HoverCircle />}
-              </Link>
+              </h1>
             </Item>
           </Items>
         </NavIn>
@@ -207,7 +209,7 @@ function SearchHeader() {
           <Search>
             <motion.svg
               onClick={toggleSearch}
-              animate={{ x: serachOpen ? -185 : 0 }}
+              animate={{ x: serachOpen ? -300 : 0 }}
               transition={{ type: "linear" }}
               fill="currentColor"
               viewBox="0 0 20 20"

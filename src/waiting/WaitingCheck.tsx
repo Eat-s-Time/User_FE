@@ -2,7 +2,6 @@ import styles from "./waitingcheck.module.scss";
 import { useHistory } from "react-router";
 import { useRecoilValue } from "recoil";
 import { adultCountState, childCountState, storeState } from "../recoil/atom";
-import Socket from "../socket/socket";
 
 function WaitingCheck() {
   const adultCount = useRecoilValue(adultCountState);
@@ -19,8 +18,7 @@ function WaitingCheck() {
   const handleBooking = () => {
     if (window.confirm(`대기를 신청하시겠습니까?`)) {
       try {
-        Socket({ adultCount, childCount, store,userId, restaurantId });
-        // history.push("/user/waitingok");
+        history.push("/user/waitingok");
       } catch (error) {
         console.log(error);
       }

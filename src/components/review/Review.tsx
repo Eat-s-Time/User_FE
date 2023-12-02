@@ -1,8 +1,10 @@
 import { useHistory } from "react-router";
-import Slidebar from "../user/Slidebar";
+import Slidebar from "../user/Sidebar";
 import styles from "./Review.module.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { FaStar } from "react-icons/fa";
+import { RiDoubleQuotesL } from "react-icons/ri";
 
 interface review {
   userName: string;
@@ -175,16 +177,26 @@ function Review() {
     <div className={styles.container}>
       <Slidebar />
       <div className={styles.right}>
-        <h1 className={styles.reviewtitle}>리뷰</h1>
-        <h1 className={styles.averageRating}>평점 {averageRating}</h1>
+        <div>
+          <h1 className={styles.averageRating}>평점</h1>
+          {[...Array(averageRating)].map((_, i) => (
+            <FaStar className={styles.ratingStar} key={i} />
+          ))}
+        </div>
+        <div className={styles.ratingLength}>
+          <h1 className={styles.reviewtitle}>리뷰 {reviewResponse.length}건</h1>
+        </div>
         {reviewResponse.map((item, index) => (
-          <div className={styles.reviewContainer}>
-            <div key={index} className={styles.reviewitem}>
-              <h1 className={styles.reviewname}>{item.reviewRating}</h1>
+          <div key={index} className={styles.reviewContainer}>
+            <RiDoubleQuotesL className={styles.queotsize} />
+            <div className={styles.reviewitem}>
               <h1 className={styles.reviewname}>{item.userName}</h1>
-              <h1 className={styles.reviewinfo}>{item.reviewDate}</h1>
-              <p className={styles.reviewinfo}>{item.reviewContent}</p>
+              {[...Array(item.reviewRating)].map((_, i) => (
+                <FaStar className={styles.ratingStar} key={i} />
+              ))}
             </div>
+            <h1 className={styles.reviewinfo}>{item.reviewDate}</h1>
+            <p className={styles.reviewContent}>{item.reviewContent}</p>
           </div>
         ))}
       </div>

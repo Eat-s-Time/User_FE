@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import Slidebar from "./Slidebar";
+import Slidebar from "./Sidebar";
 import styles from "./Detail.module.scss";
 import { storeIdState, storeState } from "../../recoil/atom";
 import { useSetRecoilState } from "recoil";

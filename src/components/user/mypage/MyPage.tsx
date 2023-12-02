@@ -44,8 +44,7 @@ function Mypage() {
     const getUserInfo = async (userId: string) => {
       try {
         const res = await axios.get(`http://localhost:9000/user/${userId}`);
-        setNickname(res.data.nickname); //닉네임
-              
+        setNickname(res.data.nickname); //닉네임 
       } catch (error) {
         console.log(error);
       }

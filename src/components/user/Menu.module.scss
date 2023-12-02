@@ -30,9 +30,11 @@
   color: white;
   margin-top: 10vh;
   text-align: center;
-  font-size: 30px;
+  font-size: 20px;
   margin-bottom: 20px;
   cursor: pointer;
+  
+
 }
 .active {
   font-weight: bold;
@@ -91,3 +93,15 @@
   margin-bottom: 10px;
 }
 
+.slidebarBox {
+  display: flex;  
+  gap: 10px;
+
+}
+
+.logo {
+  cursor: pointer;
+  margin-top: 10vh;
+    width: 8vw;
+    height: 3vh;
+}

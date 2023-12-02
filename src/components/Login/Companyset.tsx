@@ -4,12 +4,8 @@ import axios from "axios";
 import { useHistory } from "react-router";
 
 function Companyset() {
-  interface UserData {
-    username: string;
-  }
 
   const [file, setFile] = useState<File | null>(null);
-  const [userData, setUserData] = useState<UserData>({ username: ''});
   const [preview, setPreview] = useState<string | null>(null); // 이미지 미리보기
   const history = useHistory();
 
@@ -31,30 +27,29 @@ const userId = 1;
       return;
     }
     if(window.confirm("제출하시겠습니까?")) {
-     //백엔드 통신
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('username', userData.username);
-    try {
-      const response = await axios.post(`http://localhost:9000/user/${userId}/upload`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      //백엔드 통신
+     const formData = new FormData();
+     formData.append('image', file); // 'image'라는 키로 파일을 append
+     try {
+       const response = await axios.post(`http://localhost:9000/user/fileSystem/${userId}`, formData, {
+         headers: {
+           'Content-Type': 'multipart/form-data',
+         },
+       });
 
-      if (response.status === 200) {
-        history.push('/user/main');
-      } else {
-        alert(`명함 업로드에 실패했습니다. ${response.status}`);
-        console.error('명함 업로드 에러:', response);
-
-      }
-    } catch (error) {
-      alert(`명함 업로드에 실패했습니다.`);
-      console.error('명함 업로드 중 에러 발생:', error);
-    }
-    }
-  };
+       if (response.status === 200) {
+         alert("명함 인증이 완료되었습니다.");
+         history.push('/user/main');
+       } else {
+         alert(`명함 업로드에 실패했습니다. ${response.status}`);
+         console.error('명함 업로드 에러:', response);
+       }
+     } catch (error) {
+       alert(`명함 업로드에 실패했습니다.`);
+       console.error('명함 업로드 중 에러 발생:', error);
+     }
+     }
+   };
 
   return (
     <div className={styles.container}>
