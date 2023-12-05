@@ -91,6 +91,9 @@ function Detail() {
       }
     }) 
   }, [history])
+
+
+  
   return (
     <div className={styles.container}>
       <Slidebar />
@@ -104,7 +107,7 @@ function Detail() {
         {resInfo.length > 0 && (
           <div className={styles.logoBanner}>
             <img
-              src="/assets/img/logo.png"
+              src="/assets/img/img14.jpg"
               alt="Logo"
               className={styles.logo}
             />
