@@ -1,9 +1,10 @@
-import { useHistory, useLocation } from "react-router";
+import { useHistory} from "react-router";
 import styles from "./Mypage.module.scss";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { loginState, userIdState } from "../../../recoil/atom";
+import { adultCountState, childCountState, loginState, storeState, userIdState } from "../../../recoil/atom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import SearchHeader from "../../../SearchHeader";
 
 
 
@@ -16,7 +17,9 @@ interface WaitingInfo {
 function Mypage() {
   const history = useHistory();
   const setLoginAtom = useSetRecoilState(loginState);
-
+  const adultCount = useRecoilValue(adultCountState);
+  const childCount = useRecoilValue(childCountState);
+  const store = useRecoilValue(storeState);
 
   const [nickName, setNickname] = useState("");
   // 백엔드 웨이팅 정보 받아오기 (임시)
@@ -34,9 +37,9 @@ function Mypage() {
   const waitingInfoList: WaitingInfo[] = [
     {
       time: "11:30",
-      number: "성인 2 유아 0",
-      name: "양하연",
-      store: "후야",
+      number: `성인 ${adultCount} 유아 ${childCount}`,
+      name: nickName,
+      store: store,
     },
   ];
 
@@ -70,6 +73,7 @@ function Mypage() {
   })
   return (
     <div className={styles.container}>
+      <SearchHeader />
       <img
         src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
         className={styles.profile}></img>
@@ -78,7 +82,7 @@ function Mypage() {
         <p className={styles.Scheduled}>이용 예정</p>
         <h1 className={styles.waitingStore}>{waitingInfoList[0].store}</h1>
         <div className={styles.waitingLine}>
-          <h1>이용 예정시간</h1> <h1>{waitingInfoList[0].time}</h1>
+          <h1>남은 웨이팅 시간</h1> <h1>15분</h1>
         </div>
         <div className={styles.waitingLine}>
           <h1>인원</h1>

@@ -39,7 +39,7 @@ function Detail() {
   const handleBooking = () => {
     if (
       window.confirm(
-        `${resInfo[0].waiting}팀이 대기중입니다. 대기를 신청하시겠습니까?`
+        `${resInfo[0].waiting}팀이 입니대기중다. 대기를 신청하시겠습니까?`
       )
     ) {
       storeAtom(resInfo[0].name);
@@ -107,7 +107,7 @@ function Detail() {
         {resInfo.length > 0 && (
           <div className={styles.logoBanner}>
             <img
-              src="/assets/img/img14.jpg"
+              src="/assets/img/img1.jpg"
               alt="Logo"
               className={styles.logo}
             />

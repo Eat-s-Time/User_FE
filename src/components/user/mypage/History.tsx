@@ -36,6 +36,11 @@ function History() {
   //임시데이터
   const historyResponse = [
     {
+      storeName: "짬뽕 참 잘하는 집",
+      waitingTime: "2023-12-05 13:56",
+      numPeople: "성인 5명 아동 0명",
+    },
+    {
       storeName: "김가네 김치찌개",
       waitingTime: "2023-11-27 13:56",
       numPeople: "성인 1명 아동 2명",
@@ -104,19 +109,19 @@ function History() {
             <div className={styles.historyTxt}>
               <div className={styles.horizonLine}>
                 <h1 className={styles.storeName}>{item.storeName}</h1>
-                <div>이용 완료</div>
+                <div  className={styles.reviewBtn}>이용 완료</div>
               </div>
               <div className={styles.horizonLine}>
                 <h1>예약 시각</h1>
-                <h1 className={styles.numPeople}>{item.waitingTime}</h1>
+                <h1>{item.waitingTime}</h1>
               </div>
               <div className={styles.horizonLine}>
                 <h1>인원</h1>
                 <h1 className={styles.numPeople}>{item.numPeople}</h1>
               </div>
               <div className={styles.horizonLine}>
-                <div>매장 상세보기 </div>
-                <div>리뷰 작성하기 </div>
+                <div  className={styles.reviewBtn} onClick={() => history.push(`/user/detail/14`)}>매장 상세보기 </div>
+                <div  className={styles.reviewBtn} onClick={() => history.push(`/user/reviewrite`)}>리뷰 작성하기 </div>
               </div>
             </div>
           </div>

@@ -8,7 +8,7 @@ function WaitingCheck() {
   const childCount = useRecoilValue(childCountState);
   const store = useRecoilValue(storeState);
   const history = useHistory();
-  const waitingNumber = 3;
+  const waitingNumber = 13;
   const userId = "hayun4475";
   const restaurantId = 'toyo';
 

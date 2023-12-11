@@ -1,0 +1,101 @@
+@import "../../assets/reset.css";
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap");
+
+
+.container {
+  display: flex;
+  background-color: black;
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  .review {
+    width: 50vw;
+    margin: auto;
+  }
+}
+.review h1 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  input {
+    display: none;
+  }
+  i {
+    // 기본 별 색상
+    color: grey;
+    font-size: 40px;
+
+    &.orange {
+      // 클릭시 별 색상
+      color: #ffc107;
+    }
+  }
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover,
+    input[type="checkbox"]:checked + & {
+      background-color: #ffc107;
+      color: #fff;
+      
+    }
+
+    input {
+      display: none;
+    }
+  }
+}
+
+
+.textarea {
+  width: 100%;
+  margin-bottom: 20px;
+  height: 25vh;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: black;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: orange;
+  cursor: pointer;
+}

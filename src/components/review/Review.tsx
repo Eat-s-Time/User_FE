@@ -22,7 +22,6 @@ function Review() {
       const res = await axios.get<review[]>(
         "http://localhost:9000/owner/select/stores"
       );
-      console.log("메뉴", res);
       const reviewResponse = res.data.map((res) => ({
         userName: res.userName,
         reviewDate: res.reviewDate,

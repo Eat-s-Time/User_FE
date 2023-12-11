@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import {useHistory, useRouteMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -18,8 +18,8 @@ const Nav = styled(motion.nav)`
 const HoverCircle = styled(motion.span)`
   position: absolute;
   border-radius: 5px;
-  height: 10px;
-  width: 10px;
+  height: 45px;
+  width: 45px;
   background-color: orange;
   bottom: -15px;
   //정중앙에 위치하게 하는 left right margin
@@ -94,6 +94,7 @@ const Logo = styled.img`
   width: 95px;
   height: 25px;
   color: orange;
+  cursor: pointer;
 `;
 
 
@@ -112,6 +113,7 @@ const Item = styled.li`
   justify-content: center;
   flex-direction: column;
   font-size: 20px;
+  cursor: pointer;
   &:hover {
     color: orange;
   }
@@ -196,7 +198,7 @@ function SearchHeader() {
     <>
       <Nav variants={navScrollVar} animate={navAnimation} initial={"top"}>
         <NavIn>
-          <Logo src="/assets/img/smallLogo.png"/> 
+          <Logo src="/assets/img/smallLogo.png" onClick={() => history.push(`/user/main`)}/> 
           <Items>
             <Item>
               <h1 onClick={()=>   history.push("/user/mypage")}>
